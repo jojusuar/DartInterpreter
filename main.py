@@ -278,12 +278,13 @@ data = """
 *= += -= *= /= %= &= |= ^= <<= >>= >>>= <<= >>= &= |= ^= <<= >>= >>>=
 ( ) { } [ ] , : ;
 """
-time = datetime.datetime
 
-def testTokens(algorithm):
+time = datetime.datetime.now()
+date = str(time.year) + str(time.month) + str(time.day)
+
+def testTokens(algorithm, username):
     lexer.input(algorithm)
-    log = open('logs/log.txt', 'a')
-    log.write('\n -----TEST PERFORMED AT ' + time.now().strftime('%H:%M:%S') + '-----\n')
+    log = open('logs/lexico-' + username + '-' + date + '-' + time.strftime('%Hh%M') + '.txt', 'w')
     # Tokenize
     while True:
         tok = lexer.token()
@@ -291,6 +292,6 @@ def testTokens(algorithm):
             break  # No more input
         log.write(str(tok) + '\n')
     log.close()
-    print('Log written at logs/log.txt')
+    print('Log written!')
 
-testTokens(algorithmJJ)
+testTokens(algorithmJJ, 'jojusuar')
