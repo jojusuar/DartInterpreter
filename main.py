@@ -328,6 +328,40 @@ void doSomething3(int num) {
 } 
 """
 
+algorithmOL = """
+class Persona{
+Persona({
+required this.id,
+required this.nombre,
+required this.estatura,
+}) : assert(id>0),
+assert(name.isnotEmpty),
+assert(estatura > 0.0)
+
+final int id;
+final String nombre;
+final float estatura;
+}
+
+var list = ['a', 'b', 'c'];
+int a = 10;
+int b= 5;
+assert(a);
+a += 5;
+b -= 2;
+printf(a);
+printf(b);
+
+float c = 15.00;
+c /= 3;
+print(c);
+float d = 2;
+d *= 4
+
+
+"""
+
+
 data = """
 & && | || ^ == != < > <= >= + - * / % = == != < > <= >= + - * / % = ??
 *= += -= *= /= %= &= |= ^= <<= >>= >>>= <<= >>= &= |= ^= <<= >>= >>>=
@@ -351,3 +385,4 @@ def testTokens(algorithm, username):
 
 # testTokens(algorithmJJ, 'jojusuar')
 # testTokens(algortimoNA, 'Niariasve')
+# testTokens(algorithmOL, 'OliLM')
