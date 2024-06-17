@@ -12,6 +12,8 @@ tokens = ('INTEGER', #inicio contribuciones Néstor
         'DOT',
         'DOLLAR',
         'NOT',
+        'COMMENT',
+        'MULTILINE_COMMENT',
         'PLUS',
         'MINUS',
         'TIMES',
@@ -177,6 +179,16 @@ def t_VARIABLE(t):
     t.type = reserved.get(t.value, 'VARIABLE')
     return t
 
+def t_COMMENT(t):
+    r'//.*'
+    t.type = reserved.get(t.value, 'COMMENT')
+    return t
+
+def t_MULTILINE_COMMENT(t):
+    r'\/\*(?:(?!\*\/)[\S\s])*\*\/'
+    t.type = reserved.get(t.value, 'MULTILINE_COMMENT')
+    return t
+
 
 # A regular expression rule with some action code
 def t_FLOAT(t):
@@ -273,6 +285,49 @@ print("Your soul number: " + _myObject001.doStuff());
 }
 """
 
+algortimoNA = """
+void main() { 
+  int a = 10; 
+  double b = a; // Conversión implícita: int a double, permitido 
+  double c = 5.5; 
+  int d = c; // Error: Conversión implícita de double a int no permitida 
+  int e = c as int; // Error: Conversión explícita de double a int no válida en este contexto 
+  num f = c; // Correcto: double se puede asignar a num 
+  int g = f as int; // Error: Runtime error si f no es un int 
+} 
+
+ 
+
+int doSomething1(bool flag) { 
+  if (flag) { 
+    return 1; 
+  } else { 
+    return 0; // Correcto: ambas ramas retornan un valor 
+  } 
+} 
+
+String doSomething2(int code) { 
+  switch (code) { 
+    case 1: 
+      return "One"; 
+    case 2: 
+      return "Two"; 
+    default: 
+      return "Unknown"; // Correcto: todas las rutas retornan un valor 
+  } 
+} 
+
+void doSomething3(int num) { 
+  if (num > 0) { 
+    print('Positive'); 
+  } else { (num < 0) { 
+    print('Negative'); 
+  } else if { 
+    print('Zero'); //Incorrecto; no puede haber un else if despues de un else 
+  } 
+} 
+"""
+
 data = """
 & && | || ^ == != < > <= >= + - * / % = == != < > <= >= + - * / % = ??
 *= += -= *= /= %= &= |= ^= <<= >>= >>>= <<= >>= &= |= ^= <<= >>= >>>=
@@ -294,4 +349,5 @@ def testTokens(algorithm, username):
     log.close()
     print('Log written!')
 
-testTokens(algorithmJJ, 'jojusuar')
+# testTokens(algorithmJJ, 'jojusuar')
+testTokens(algortimoNA, 'Niariasve')
