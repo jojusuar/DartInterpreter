@@ -350,4 +350,4 @@ def testTokens(algorithm, username):
     print('Log written!')
 
 # testTokens(algorithmJJ, 'jojusuar')
-testTokens(algortimoNA, 'Niariasve')
+# testTokens(algortimoNA, 'Niariasve')
