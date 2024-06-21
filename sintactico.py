@@ -25,6 +25,7 @@ def p_datatype(p):
              | SET_TYPE
              | RUNES_TYPE
              | SYMBOL_TYPE
+             | VAR_TYPE
     '''
 
 def p_variableDeclaration(p):

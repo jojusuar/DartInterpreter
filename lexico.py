@@ -140,7 +140,8 @@ reserved = {
     'Map': 'MAP_TYPE',
     'Runes': 'RUNES_TYPE',
     'Set': 'SET_TYPE',
-    'Symbol' : 'SYMBOL_TYPE'
+    'Symbol': 'SYMBOL_TYPE',
+    'var': 'VAR_TYPE'
 }
 
 tokens = tokens + tuple(reserved.values())

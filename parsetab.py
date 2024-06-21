@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'ABSTRACT AND_ASSIGN AS ASSERT ASSIGN ASYNC AWAIT BASE BITWISE_AND BITWISE_OR BITWISE_XOR BOOLEAN BOOL_TYPE BREAK CASE CATCH CLASS COLON COMMA COMMENT CONST CONTINUE COVARIANT DEFAULT DEFERRED DIVIDE DIV_ASSIGN DO DOLLAR DOT DOUBLE DOUBLE_TYPE DYNAMIC ELSE ENUM EQUALS EXPORT EXTENDS EXTENSION EXTERNAL FACTORY FALSE FINAL FINALLY FOR FUNCTION FUNC_START GET HIDE IF IF_NULL IMPLEMENTS IMPORT IN INTEGER INTERFACE INT_TYPE IS LATE LBRACE LBRACKET LESS_EQUAL LESS_THAN LIBRARY LIST_TYPE LOGICAL_AND LOGICAL_OR LPAREN LSHIFT_ASSIGN MAP_TYPE MINUS MIXIN MOD MOD_ASSIGN MORE_EQUAL MORE_THAN MULTILINE_COMMENT MUL_ASSIGN NEW NOT NOT_EQUAL NULL NUM_TYPE OF ON OPERATOR OR_ASSIGN PART PLUS RBRACE RBRACKET REQUIRED RETHROW RETURN RPAREN RSHIFT_ASSIGN RUNES_TYPE RUNSIGNED_SHIFT_ASSIGN SEALED SEMICOLON SET SET_TYPE SHOW STATIC STRING STRING_TYPE SUB_ASSIGN SUM_ASSIGN SUPER SWITCH SYMBOL_TYPE SYNC THIS THROW TIMES TRUE TRY TYPE TYPEDEF VAR VARIABLE VOID WHEN WHILE WITH XOR_ASSIGN YIELD\n    body : instruction SEMICOLON body\n         | instruction SEMICOLON\n    \n    instruction : functionCall\n           | variableDeclaration\n    \n    datatype : INT_TYPE\n             | DOUBLE_TYPE\n             | NUM_TYPE\n             | BOOL_TYPE\n             | STRING_TYPE\n             | LIST_TYPE\n             | MAP_TYPE\n             | SET_TYPE\n             | RUNES_TYPE\n             | SYMBOL_TYPE\n    \n    variableDeclaration : datatype VARIABLE ASSIGN value\n                        | datatype VARIABLE ASSIGN functionCall\n    \n    functionCall : prototype\n                 | object DOT prototype\n    \n    values : value COMMA values\n           | value\n    \n    prototype : FUNC_START values RPAREN\n              | FUNC_START RPAREN\n    \n    object : NEW prototype\n    \n    number : INTEGER\n           | DOUBLE\n    \n    arithmeticOperator : PLUS\n                       | MINUS\n                       | TIMES\n                       | DIVIDE\n    \n    value : number\n          | object\n          | arithmeticExpression\n          | STRING\n          | VARIABLE\n          | BOOLEAN\n    \n    arithmeticExpression : value arithmeticOperator value\n                         | LPAREN value arithmeticOperator value RPAREN\n    '
+_lr_signature = 'ABSTRACT AND_ASSIGN AS ASSERT ASSIGN ASYNC AWAIT BASE BITWISE_AND BITWISE_OR BITWISE_XOR BOOLEAN BOOL_TYPE BREAK CASE CATCH CLASS COLON COMMA COMMENT CONST CONTINUE COVARIANT DEFAULT DEFERRED DIVIDE DIV_ASSIGN DO DOLLAR DOT DOUBLE DOUBLE_TYPE DYNAMIC ELSE ENUM EQUALS EXPORT EXTENDS EXTENSION EXTERNAL FACTORY FALSE FINAL FINALLY FOR FUNCTION FUNC_START GET HIDE IF IF_NULL IMPLEMENTS IMPORT IN INTEGER INTERFACE INT_TYPE IS LATE LBRACE LBRACKET LESS_EQUAL LESS_THAN LIBRARY LIST_TYPE LOGICAL_AND LOGICAL_OR LPAREN LSHIFT_ASSIGN MAP_TYPE MINUS MIXIN MOD MOD_ASSIGN MORE_EQUAL MORE_THAN MULTILINE_COMMENT MUL_ASSIGN NEW NOT NOT_EQUAL NULL NUM_TYPE OF ON OPERATOR OR_ASSIGN PART PLUS RBRACE RBRACKET REQUIRED RETHROW RETURN RPAREN RSHIFT_ASSIGN RUNES_TYPE RUNSIGNED_SHIFT_ASSIGN SEALED SEMICOLON SET SET_TYPE SHOW STATIC STRING STRING_TYPE SUB_ASSIGN SUM_ASSIGN SUPER SWITCH SYMBOL_TYPE SYNC THIS THROW TIMES TRUE TRY TYPE TYPEDEF VARIABLE VAR_TYPE VOID WHEN WHILE WITH XOR_ASSIGN YIELD\n    body : instruction SEMICOLON body\n         | instruction SEMICOLON\n    \n    instruction : functionCall\n           | variableDeclaration\n    \n    datatype : INT_TYPE\n             | DOUBLE_TYPE\n             | NUM_TYPE\n             | BOOL_TYPE\n             | STRING_TYPE\n             | LIST_TYPE\n             | MAP_TYPE\n             | SET_TYPE\n             | RUNES_TYPE\n             | SYMBOL_TYPE\n             | VAR_TYPE\n    \n    variableDeclaration : datatype VARIABLE ASSIGN value\n                        | datatype VARIABLE ASSIGN functionCall\n    \n    functionCall : prototype\n                 | object DOT prototype\n    \n    values : value COMMA values\n           | value\n    \n    prototype : FUNC_START values RPAREN\n              | FUNC_START RPAREN\n    \n    object : NEW prototype\n    \n    number : INTEGER\n           | DOUBLE\n    \n    arithmeticOperator : PLUS\n                       | MINUS\n                       | TIMES\n                       | DIVIDE\n    \n    value : number\n          | object\n          | arithmeticExpression\n          | STRING\n          | VARIABLE\n          | BOOLEAN\n    \n    arithmeticExpression : value arithmeticOperator value\n                         | LPAREN value arithmeticOperator value RPAREN\n    '
     
-_lr_action_items = {'FUNC_START':([0,9,20,21,38,],[8,8,8,8,8,]),'NEW':([0,8,20,34,38,40,41,42,43,44,45,52,],[9,9,9,9,9,9,9,-26,-27,-28,-29,9,]),'INT_TYPE':([0,20,],[10,10,]),'DOUBLE_TYPE':([0,20,],[11,11,]),'NUM_TYPE':([0,20,],[12,12,]),'BOOL_TYPE':([0,20,],[13,13,]),'STRING_TYPE':([0,20,],[14,14,]),'LIST_TYPE':([0,20,],[15,15,]),'MAP_TYPE':([0,20,],[16,16,]),'SET_TYPE':([0,20,],[17,17,]),'RUNES_TYPE':([0,20,],[18,18,]),'SYMBOL_TYPE':([0,20,],[19,19,]),'$end':([1,20,36,],[0,-2,-1,]),'SEMICOLON':([2,3,4,5,24,26,27,28,29,30,31,32,33,35,37,39,47,48,49,51,54,],[20,-3,-4,-17,-22,-30,-31,-32,-33,-34,-35,-24,-25,-23,-18,-21,-15,-16,-31,-36,-37,]),'DOT':([6,24,35,39,49,],[21,-22,-23,-21,21,]),'VARIABLE':([7,8,10,11,12,13,14,15,16,17,18,19,34,38,40,41,42,43,44,45,52,],[22,30,-5,-6,-7,-8,-9,-10,-11,-12,-13,-14,30,30,30,30,-26,-27,-28,-29,30,]),'RPAREN':([8,23,24,25,26,27,28,29,30,31,32,33,35,39,50,51,53,54,],[24,39,-22,-20,-30,-31,-32,-33,-34,-35,-24,-25,-23,-21,-19,-36,54,-37,]),'STRING':([8,34,38,40,41,42,43,44,45,52,],[29,29,29,29,29,-26,-27,-28,-29,29,]),'BOOLEAN':([8,34,38,40,41,42,43,44,45,52,],[31,31,31,31,31,-26,-27,-28,-29,31,]),'INTEGER':([8,34,38,40,41,42,43,44,45,52,],[32,32,32,32,32,-26,-27,-28,-29,32,]),'DOUBLE':([8,34,38,40,41,42,43,44,45,52,],[33,33,33,33,33,-26,-27,-28,-29,33,]),'LPAREN':([8,34,38,40,41,42,43,44,45,52,],[34,34,34,34,34,-26,-27,-28,-29,34,]),'ASSIGN':([22,],[38,]),'COMMA':([24,25,26,27,28,29,30,31,32,33,35,39,51,54,],[-22,40,-30,-31,-32,-33,-34,-35,-24,-25,-23,-21,-36,-37,]),'PLUS':([24,25,26,27,28,29,30,31,32,33,35,39,46,47,49,51,53,54,],[-22,42,-30,-31,-32,-33,-34,-35,-24,-25,-23,-21,42,42,-31,42,42,-37,]),'MINUS':([24,25,26,27,28,29,30,31,32,33,35,39,46,47,49,51,53,54,],[-22,43,-30,-31,-32,-33,-34,-35,-24,-25,-23,-21,43,43,-31,43,43,-37,]),'TIMES':([24,25,26,27,28,29,30,31,32,33,35,39,46,47,49,51,53,54,],[-22,44,-30,-31,-32,-33,-34,-35,-24,-25,-23,-21,44,44,-31,44,44,-37,]),'DIVIDE':([24,25,26,27,28,29,30,31,32,33,35,39,46,47,49,51,53,54,],[-22,45,-30,-31,-32,-33,-34,-35,-24,-25,-23,-21,45,45,-31,45,45,-37,]),}
+_lr_action_items = {'FUNC_START':([0,9,21,22,39,],[8,8,8,8,8,]),'NEW':([0,8,21,35,39,41,42,43,44,45,46,53,],[9,9,9,9,9,9,9,-27,-28,-29,-30,9,]),'INT_TYPE':([0,21,],[10,10,]),'DOUBLE_TYPE':([0,21,],[11,11,]),'NUM_TYPE':([0,21,],[12,12,]),'BOOL_TYPE':([0,21,],[13,13,]),'STRING_TYPE':([0,21,],[14,14,]),'LIST_TYPE':([0,21,],[15,15,]),'MAP_TYPE':([0,21,],[16,16,]),'SET_TYPE':([0,21,],[17,17,]),'RUNES_TYPE':([0,21,],[18,18,]),'SYMBOL_TYPE':([0,21,],[19,19,]),'VAR_TYPE':([0,21,],[20,20,]),'$end':([1,21,37,],[0,-2,-1,]),'SEMICOLON':([2,3,4,5,25,27,28,29,30,31,32,33,34,36,38,40,48,49,50,52,55,],[21,-3,-4,-18,-23,-31,-32,-33,-34,-35,-36,-25,-26,-24,-19,-22,-16,-17,-32,-37,-38,]),'DOT':([6,25,36,40,50,],[22,-23,-24,-22,22,]),'VARIABLE':([7,8,10,11,12,13,14,15,16,17,18,19,20,35,39,41,42,43,44,45,46,53,],[23,31,-5,-6,-7,-8,-9,-10,-11,-12,-13,-14,-15,31,31,31,31,-27,-28,-29,-30,31,]),'RPAREN':([8,24,25,26,27,28,29,30,31,32,33,34,36,40,51,52,54,55,],[25,40,-23,-21,-31,-32,-33,-34,-35,-36,-25,-26,-24,-22,-20,-37,55,-38,]),'STRING':([8,35,39,41,42,43,44,45,46,53,],[30,30,30,30,30,-27,-28,-29,-30,30,]),'BOOLEAN':([8,35,39,41,42,43,44,45,46,53,],[32,32,32,32,32,-27,-28,-29,-30,32,]),'INTEGER':([8,35,39,41,42,43,44,45,46,53,],[33,33,33,33,33,-27,-28,-29,-30,33,]),'DOUBLE':([8,35,39,41,42,43,44,45,46,53,],[34,34,34,34,34,-27,-28,-29,-30,34,]),'LPAREN':([8,35,39,41,42,43,44,45,46,53,],[35,35,35,35,35,-27,-28,-29,-30,35,]),'ASSIGN':([23,],[39,]),'COMMA':([25,26,27,28,29,30,31,32,33,34,36,40,52,55,],[-23,41,-31,-32,-33,-34,-35,-36,-25,-26,-24,-22,-37,-38,]),'PLUS':([25,26,27,28,29,30,31,32,33,34,36,40,47,48,50,52,54,55,],[-23,43,-31,-32,-33,-34,-35,-36,-25,-26,-24,-22,43,43,-32,43,43,-38,]),'MINUS':([25,26,27,28,29,30,31,32,33,34,36,40,47,48,50,52,54,55,],[-23,44,-31,-32,-33,-34,-35,-36,-25,-26,-24,-22,44,44,-32,44,44,-38,]),'TIMES':([25,26,27,28,29,30,31,32,33,34,36,40,47,48,50,52,54,55,],[-23,45,-31,-32,-33,-34,-35,-36,-25,-26,-24,-22,45,45,-32,45,45,-38,]),'DIVIDE':([25,26,27,28,29,30,31,32,33,34,36,40,47,48,50,52,54,55,],[-23,46,-31,-32,-33,-34,-35,-36,-25,-26,-24,-22,46,46,-32,46,46,-38,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'body':([0,20,],[1,36,]),'instruction':([0,20,],[2,2,]),'functionCall':([0,20,38,],[3,3,48,]),'variableDeclaration':([0,20,],[4,4,]),'prototype':([0,9,20,21,38,],[5,35,5,37,5,]),'object':([0,8,20,34,38,40,41,52,],[6,27,6,27,49,27,27,27,]),'datatype':([0,20,],[7,7,]),'values':([8,40,],[23,50,]),'value':([8,34,38,40,41,52,],[25,46,47,25,51,53,]),'number':([8,34,38,40,41,52,],[26,26,26,26,26,26,]),'arithmeticExpression':([8,34,38,40,41,52,],[28,28,28,28,28,28,]),'arithmeticOperator':([25,46,47,51,53,],[41,52,41,41,41,]),}
+_lr_goto_items = {'body':([0,21,],[1,37,]),'instruction':([0,21,],[2,2,]),'functionCall':([0,21,39,],[3,3,49,]),'variableDeclaration':([0,21,],[4,4,]),'prototype':([0,9,21,22,39,],[5,36,5,38,5,]),'object':([0,8,21,35,39,41,42,53,],[6,28,6,28,50,28,28,28,]),'datatype':([0,21,],[7,7,]),'values':([8,41,],[24,51,]),'value':([8,35,39,41,42,53,],[26,47,48,26,52,54,]),'number':([8,35,39,41,42,53,],[27,27,27,27,27,27,]),'arithmeticExpression':([8,35,39,41,42,53,],[29,29,29,29,29,29,]),'arithmeticOperator':([26,47,48,52,54,],[42,53,42,42,42,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -41,27 +41,28 @@ _lr_productions = [
   ('datatype -> SET_TYPE','datatype',1,'p_datatype','sintactico.py',25),
   ('datatype -> RUNES_TYPE','datatype',1,'p_datatype','sintactico.py',26),
   ('datatype -> SYMBOL_TYPE','datatype',1,'p_datatype','sintactico.py',27),
-  ('variableDeclaration -> datatype VARIABLE ASSIGN value','variableDeclaration',4,'p_variableDeclaration','sintactico.py',32),
-  ('variableDeclaration -> datatype VARIABLE ASSIGN functionCall','variableDeclaration',4,'p_variableDeclaration','sintactico.py',33),
-  ('functionCall -> prototype','functionCall',1,'p_functionCall','sintactico.py',38),
-  ('functionCall -> object DOT prototype','functionCall',3,'p_functionCall','sintactico.py',39),
-  ('values -> value COMMA values','values',3,'p_values','sintactico.py',44),
-  ('values -> value','values',1,'p_values','sintactico.py',45),
-  ('prototype -> FUNC_START values RPAREN','prototype',3,'p_prototype','sintactico.py',50),
-  ('prototype -> FUNC_START RPAREN','prototype',2,'p_prototype','sintactico.py',51),
-  ('object -> NEW prototype','object',2,'p_object','sintactico.py',56),
-  ('number -> INTEGER','number',1,'p_number','sintactico.py',62),
-  ('number -> DOUBLE','number',1,'p_number','sintactico.py',63),
-  ('arithmeticOperator -> PLUS','arithmeticOperator',1,'p_arithmeticOperator','sintactico.py',68),
-  ('arithmeticOperator -> MINUS','arithmeticOperator',1,'p_arithmeticOperator','sintactico.py',69),
-  ('arithmeticOperator -> TIMES','arithmeticOperator',1,'p_arithmeticOperator','sintactico.py',70),
-  ('arithmeticOperator -> DIVIDE','arithmeticOperator',1,'p_arithmeticOperator','sintactico.py',71),
-  ('value -> number','value',1,'p_value','sintactico.py',76),
-  ('value -> object','value',1,'p_value','sintactico.py',77),
-  ('value -> arithmeticExpression','value',1,'p_value','sintactico.py',78),
-  ('value -> STRING','value',1,'p_value','sintactico.py',79),
-  ('value -> VARIABLE','value',1,'p_value','sintactico.py',80),
-  ('value -> BOOLEAN','value',1,'p_value','sintactico.py',81),
-  ('arithmeticExpression -> value arithmeticOperator value','arithmeticExpression',3,'p_arithmeticExpression','sintactico.py',86),
-  ('arithmeticExpression -> LPAREN value arithmeticOperator value RPAREN','arithmeticExpression',5,'p_arithmeticExpression','sintactico.py',87),
+  ('datatype -> VAR_TYPE','datatype',1,'p_datatype','sintactico.py',28),
+  ('variableDeclaration -> datatype VARIABLE ASSIGN value','variableDeclaration',4,'p_variableDeclaration','sintactico.py',33),
+  ('variableDeclaration -> datatype VARIABLE ASSIGN functionCall','variableDeclaration',4,'p_variableDeclaration','sintactico.py',34),
+  ('functionCall -> prototype','functionCall',1,'p_functionCall','sintactico.py',39),
+  ('functionCall -> object DOT prototype','functionCall',3,'p_functionCall','sintactico.py',40),
+  ('values -> value COMMA values','values',3,'p_values','sintactico.py',45),
+  ('values -> value','values',1,'p_values','sintactico.py',46),
+  ('prototype -> FUNC_START values RPAREN','prototype',3,'p_prototype','sintactico.py',51),
+  ('prototype -> FUNC_START RPAREN','prototype',2,'p_prototype','sintactico.py',52),
+  ('object -> NEW prototype','object',2,'p_object','sintactico.py',57),
+  ('number -> INTEGER','number',1,'p_number','sintactico.py',63),
+  ('number -> DOUBLE','number',1,'p_number','sintactico.py',64),
+  ('arithmeticOperator -> PLUS','arithmeticOperator',1,'p_arithmeticOperator','sintactico.py',69),
+  ('arithmeticOperator -> MINUS','arithmeticOperator',1,'p_arithmeticOperator','sintactico.py',70),
+  ('arithmeticOperator -> TIMES','arithmeticOperator',1,'p_arithmeticOperator','sintactico.py',71),
+  ('arithmeticOperator -> DIVIDE','arithmeticOperator',1,'p_arithmeticOperator','sintactico.py',72),
+  ('value -> number','value',1,'p_value','sintactico.py',77),
+  ('value -> object','value',1,'p_value','sintactico.py',78),
+  ('value -> arithmeticExpression','value',1,'p_value','sintactico.py',79),
+  ('value -> STRING','value',1,'p_value','sintactico.py',80),
+  ('value -> VARIABLE','value',1,'p_value','sintactico.py',81),
+  ('value -> BOOLEAN','value',1,'p_value','sintactico.py',82),
+  ('arithmeticExpression -> value arithmeticOperator value','arithmeticExpression',3,'p_arithmeticExpression','sintactico.py',87),
+  ('arithmeticExpression -> LPAREN value arithmeticOperator value RPAREN','arithmeticExpression',5,'p_arithmeticExpression','sintactico.py',88),
 ]
