@@ -29,25 +29,25 @@ tokens = ('INTEGER', #inicio contribuciones Néstor
         'VARIABLE',
         'COMMA',  
         'COLON',
-        'FLOAT',
+        'DOUBLE',
         'SEMICOLON', #Inicio contribuciones Oliver
         'LBRACE',
         'RBRACE',
         'LBRACKET',
         'RBRACKET',
         'STRING',
-        'ASSING',
-        'SUM_ASSING',
-        'SUB_ASSING',
-        'MUL_ASSING',
-        'DIV_ASSING',
-        'MOD_ASSING',
-        'AND_ASSING',
-        'OR_ASSING',
-        'XOR_ASSING',
-        'LSHIFT_ASSING', #Inicio contribuciones José Julio
-        'RSHIFT_ASSING',
-        'RUNSINGED_SHIFT_ASSING',
+        'ASSIGN',
+        'SUM_ASSIGN',
+        'SUB_ASSIGN',
+        'MUL_ASSIGN',
+        'DIV_ASSIGN',
+        'MOD_ASSIGN',
+        'AND_ASSIGN',
+        'OR_ASSIGN',
+        'XOR_ASSIGN',
+        'LSHIFT_ASSIGN', #Inicio contribuciones José Julio
+        'RSHIFT_ASSIGN',
+        'RUNSIGNED_SHIFT_ASSIGN',
         'LESS_THAN',
         'MORE_THAN',
         'LESS_EQUAL',
@@ -57,7 +57,9 @@ tokens = ('INTEGER', #inicio contribuciones Néstor
         'BITWISE_XOR',
         'LOGICAL_AND',
         'LOGICAL_OR',
-        'IF_NULL'
+        'IF_NULL',
+        'BOOLEAN',
+        'FUNC_START'
     )
 
 reserved = {
@@ -128,12 +130,23 @@ reserved = {
     'when': 'WHEN',
     'with': 'WITH',
     'while': 'WHILE',
-    'yield': 'YIELD'
+    'yield': 'YIELD',
+    'int': 'INT_TYPE',
+    'double': 'DOUBLE_TYPE',
+    'num': 'NUM_TYPE',
+    'bool': 'BOOL_TYPE',
+    'String': 'STRING_TYPE',
+    'List': 'LIST_TYPE',
+    'Map': 'MAP_TYPE',
+    'Runes': 'RUNES_TYPE',
+    'Set': 'SET_TYPE',
+    'Symbol' : 'SYMBOL_TYPE'
 }
 
 tokens = tokens + tuple(reserved.values())
 
 # Regular expression rules for simple tokens
+t_BOOLEAN = r'(true|false)'
 t_DOT = r'\.'
 t_DOLLAR = r'\$'
 t_NOT = r'!'
@@ -153,22 +166,22 @@ t_LBRACE = r'\{'
 t_RBRACE = r'\}'
 t_LBRACKET = r'\['
 t_RBRACKET = r'\]'
-t_ASSING = r'='
+t_ASSIGN = r'='
 t_LESS_THAN = r'<'
 t_MORE_THAN = r'>'
 t_LESS_EQUAL = r'<='
 t_MORE_EQUAL = r'>='
-t_SUM_ASSING = r'\+='
-t_SUB_ASSING = r'-='
-t_MUL_ASSING = r'\*='
-t_DIV_ASSING = r'\/='
-t_MOD_ASSING = r'%='
-t_AND_ASSING = r'&='
-t_OR_ASSING = r'\|='
-t_XOR_ASSING = r'\^='
-t_LSHIFT_ASSING = r'<<='
-t_RSHIFT_ASSING = r'>>='
-t_RUNSINGED_SHIFT_ASSING = r'>>>=' 
+t_SUM_ASSIGN = r'\+='
+t_SUB_ASSIGN = r'-='
+t_MUL_ASSIGN = r'\*='
+t_DIV_ASSIGN = r'\/='
+t_MOD_ASSIGN = r'%='
+t_AND_ASSIGN = r'&='
+t_OR_ASSIGN= r'\|='
+t_XOR_ASSIGN = r'\^='
+t_LSHIFT_ASSIGN = r'<<='
+t_RSHIFT_ASSIGN = r'>>='
+t_RUNSIGNED_SHIFT_ASSIGN = r'>>>=' 
 t_BITWISE_AND = r'\&'
 t_BITWISE_OR = r'\|'
 t_BITWISE_XOR = r'\^'
@@ -176,6 +189,10 @@ t_LOGICAL_AND = r'\&\&'
 t_LOGICAL_OR = r'\|\|'
 t_IF_NULL = r'\?\?'
 
+def t_FUNC_START(t):
+    r'[a-zA-Z_][a-zA-Z0-9_]*\('
+    t.type = reserved.get(t.value, 'FUNC_START')
+    return t
 
 def t_VARIABLE(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
@@ -194,7 +211,7 @@ def t_MULTILINE_COMMENT(t):
 
 
 # A regular expression rule with some action code
-def t_FLOAT(t):
+def t_DOUBLE(t):
     r'-?(\d+\.\d*|\d*\.\d+)'
     t.value = float(t.value)
     return t

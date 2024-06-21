@@ -1,0 +1,1097 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    ABSTRACT
+    AND_ASSIGN
+    AS
+    ASSERT
+    ASYNC
+    AWAIT
+    BASE
+    BITWISE_AND
+    BITWISE_OR
+    BITWISE_XOR
+    BREAK
+    CASE
+    CATCH
+    CLASS
+    COLON
+    COMMENT
+    CONST
+    CONTINUE
+    COVARIANT
+    DEFAULT
+    DEFERRED
+    DIV_ASSIGN
+    DO
+    DOLLAR
+    DYNAMIC
+    ELSE
+    ENUM
+    EQUALS
+    EXPORT
+    EXTENDS
+    EXTENSION
+    EXTERNAL
+    FACTORY
+    FALSE
+    FINAL
+    FINALLY
+    FOR
+    FUNCTION
+    GET
+    HIDE
+    IF
+    IF_NULL
+    IMPLEMENTS
+    IMPORT
+    IN
+    INTERFACE
+    IS
+    LATE
+    LBRACE
+    LBRACKET
+    LESS_EQUAL
+    LESS_THAN
+    LIBRARY
+    LOGICAL_AND
+    LOGICAL_OR
+    LSHIFT_ASSIGN
+    MIXIN
+    MOD
+    MOD_ASSIGN
+    MORE_EQUAL
+    MORE_THAN
+    MULTILINE_COMMENT
+    MUL_ASSIGN
+    NOT
+    NOT_EQUAL
+    NULL
+    OF
+    ON
+    OPERATOR
+    OR_ASSIGN
+    PART
+    RBRACE
+    RBRACKET
+    REQUIRED
+    RETHROW
+    RETURN
+    RSHIFT_ASSIGN
+    RUNSIGNED_SHIFT_ASSIGN
+    SEALED
+    SET
+    SHOW
+    STATIC
+    SUB_ASSIGN
+    SUM_ASSIGN
+    SUPER
+    SWITCH
+    SYNC
+    THIS
+    THROW
+    TRUE
+    TRY
+    TYPE
+    TYPEDEF
+    VAR
+    VOID
+    WHEN
+    WHILE
+    WITH
+    XOR_ASSIGN
+    YIELD
+
+Grammar
+
+Rule 0     S' -> body
+Rule 1     body -> instruction SEMICOLON body
+Rule 2     body -> instruction SEMICOLON
+Rule 3     instruction -> functionCall
+Rule 4     instruction -> variableDeclaration
+Rule 5     datatype -> INT_TYPE
+Rule 6     datatype -> DOUBLE_TYPE
+Rule 7     datatype -> NUM_TYPE
+Rule 8     datatype -> BOOL_TYPE
+Rule 9     datatype -> STRING_TYPE
+Rule 10    datatype -> LIST_TYPE
+Rule 11    datatype -> MAP_TYPE
+Rule 12    datatype -> SET_TYPE
+Rule 13    datatype -> RUNES_TYPE
+Rule 14    datatype -> SYMBOL_TYPE
+Rule 15    variableDeclaration -> datatype VARIABLE ASSIGN value
+Rule 16    variableDeclaration -> datatype VARIABLE ASSIGN functionCall
+Rule 17    functionCall -> prototype
+Rule 18    functionCall -> object DOT prototype
+Rule 19    values -> value COMMA values
+Rule 20    values -> value
+Rule 21    prototype -> FUNC_START values RPAREN
+Rule 22    prototype -> FUNC_START RPAREN
+Rule 23    object -> NEW prototype
+Rule 24    number -> INTEGER
+Rule 25    number -> DOUBLE
+Rule 26    arithmeticOperator -> PLUS
+Rule 27    arithmeticOperator -> MINUS
+Rule 28    arithmeticOperator -> TIMES
+Rule 29    arithmeticOperator -> DIVIDE
+Rule 30    value -> number
+Rule 31    value -> object
+Rule 32    value -> arithmeticExpression
+Rule 33    value -> STRING
+Rule 34    value -> VARIABLE
+Rule 35    value -> BOOLEAN
+Rule 36    arithmeticExpression -> value arithmeticOperator value
+Rule 37    arithmeticExpression -> LPAREN value arithmeticOperator value RPAREN
+
+Terminals, with rules where they appear
+
+ABSTRACT             : 
+AND_ASSIGN           : 
+AS                   : 
+ASSERT               : 
+ASSIGN               : 15 16
+ASYNC                : 
+AWAIT                : 
+BASE                 : 
+BITWISE_AND          : 
+BITWISE_OR           : 
+BITWISE_XOR          : 
+BOOLEAN              : 35
+BOOL_TYPE            : 8
+BREAK                : 
+CASE                 : 
+CATCH                : 
+CLASS                : 
+COLON                : 
+COMMA                : 19
+COMMENT              : 
+CONST                : 
+CONTINUE             : 
+COVARIANT            : 
+DEFAULT              : 
+DEFERRED             : 
+DIVIDE               : 29
+DIV_ASSIGN           : 
+DO                   : 
+DOLLAR               : 
+DOT                  : 18
+DOUBLE               : 25
+DOUBLE_TYPE          : 6
+DYNAMIC              : 
+ELSE                 : 
+ENUM                 : 
+EQUALS               : 
+EXPORT               : 
+EXTENDS              : 
+EXTENSION            : 
+EXTERNAL             : 
+FACTORY              : 
+FALSE                : 
+FINAL                : 
+FINALLY              : 
+FOR                  : 
+FUNCTION             : 
+FUNC_START           : 21 22
+GET                  : 
+HIDE                 : 
+IF                   : 
+IF_NULL              : 
+IMPLEMENTS           : 
+IMPORT               : 
+IN                   : 
+INTEGER              : 24
+INTERFACE            : 
+INT_TYPE             : 5
+IS                   : 
+LATE                 : 
+LBRACE               : 
+LBRACKET             : 
+LESS_EQUAL           : 
+LESS_THAN            : 
+LIBRARY              : 
+LIST_TYPE            : 10
+LOGICAL_AND          : 
+LOGICAL_OR           : 
+LPAREN               : 37
+LSHIFT_ASSIGN        : 
+MAP_TYPE             : 11
+MINUS                : 27
+MIXIN                : 
+MOD                  : 
+MOD_ASSIGN           : 
+MORE_EQUAL           : 
+MORE_THAN            : 
+MULTILINE_COMMENT    : 
+MUL_ASSIGN           : 
+NEW                  : 23
+NOT                  : 
+NOT_EQUAL            : 
+NULL                 : 
+NUM_TYPE             : 7
+OF                   : 
+ON                   : 
+OPERATOR             : 
+OR_ASSIGN            : 
+PART                 : 
+PLUS                 : 26
+RBRACE               : 
+RBRACKET             : 
+REQUIRED             : 
+RETHROW              : 
+RETURN               : 
+RPAREN               : 21 22 37
+RSHIFT_ASSIGN        : 
+RUNES_TYPE           : 13
+RUNSIGNED_SHIFT_ASSIGN : 
+SEALED               : 
+SEMICOLON            : 1 2
+SET                  : 
+SET_TYPE             : 12
+SHOW                 : 
+STATIC               : 
+STRING               : 33
+STRING_TYPE          : 9
+SUB_ASSIGN           : 
+SUM_ASSIGN           : 
+SUPER                : 
+SWITCH               : 
+SYMBOL_TYPE          : 14
+SYNC                 : 
+THIS                 : 
+THROW                : 
+TIMES                : 28
+TRUE                 : 
+TRY                  : 
+TYPE                 : 
+TYPEDEF              : 
+VAR                  : 
+VARIABLE             : 15 16 34
+VOID                 : 
+WHEN                 : 
+WHILE                : 
+WITH                 : 
+XOR_ASSIGN           : 
+YIELD                : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+arithmeticExpression : 32
+arithmeticOperator   : 36 37
+body                 : 1 0
+datatype             : 15 16
+functionCall         : 3 16
+instruction          : 1 2
+number               : 30
+object               : 18 31
+prototype            : 17 18 23
+value                : 15 19 20 36 36 37 37
+values               : 19 21
+variableDeclaration  : 4
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . body
+    (1) body -> . instruction SEMICOLON body
+    (2) body -> . instruction SEMICOLON
+    (3) instruction -> . functionCall
+    (4) instruction -> . variableDeclaration
+    (17) functionCall -> . prototype
+    (18) functionCall -> . object DOT prototype
+    (15) variableDeclaration -> . datatype VARIABLE ASSIGN value
+    (16) variableDeclaration -> . datatype VARIABLE ASSIGN functionCall
+    (21) prototype -> . FUNC_START values RPAREN
+    (22) prototype -> . FUNC_START RPAREN
+    (23) object -> . NEW prototype
+    (5) datatype -> . INT_TYPE
+    (6) datatype -> . DOUBLE_TYPE
+    (7) datatype -> . NUM_TYPE
+    (8) datatype -> . BOOL_TYPE
+    (9) datatype -> . STRING_TYPE
+    (10) datatype -> . LIST_TYPE
+    (11) datatype -> . MAP_TYPE
+    (12) datatype -> . SET_TYPE
+    (13) datatype -> . RUNES_TYPE
+    (14) datatype -> . SYMBOL_TYPE
+
+    FUNC_START      shift and go to state 8
+    NEW             shift and go to state 9
+    INT_TYPE        shift and go to state 10
+    DOUBLE_TYPE     shift and go to state 11
+    NUM_TYPE        shift and go to state 12
+    BOOL_TYPE       shift and go to state 13
+    STRING_TYPE     shift and go to state 14
+    LIST_TYPE       shift and go to state 15
+    MAP_TYPE        shift and go to state 16
+    SET_TYPE        shift and go to state 17
+    RUNES_TYPE      shift and go to state 18
+    SYMBOL_TYPE     shift and go to state 19
+
+    body                           shift and go to state 1
+    instruction                    shift and go to state 2
+    functionCall                   shift and go to state 3
+    variableDeclaration            shift and go to state 4
+    prototype                      shift and go to state 5
+    object                         shift and go to state 6
+    datatype                       shift and go to state 7
+
+state 1
+
+    (0) S' -> body .
+
+
+
+state 2
+
+    (1) body -> instruction . SEMICOLON body
+    (2) body -> instruction . SEMICOLON
+
+    SEMICOLON       shift and go to state 20
+
+
+state 3
+
+    (3) instruction -> functionCall .
+
+    SEMICOLON       reduce using rule 3 (instruction -> functionCall .)
+
+
+state 4
+
+    (4) instruction -> variableDeclaration .
+
+    SEMICOLON       reduce using rule 4 (instruction -> variableDeclaration .)
+
+
+state 5
+
+    (17) functionCall -> prototype .
+
+    SEMICOLON       reduce using rule 17 (functionCall -> prototype .)
+
+
+state 6
+
+    (18) functionCall -> object . DOT prototype
+
+    DOT             shift and go to state 21
+
+
+state 7
+
+    (15) variableDeclaration -> datatype . VARIABLE ASSIGN value
+    (16) variableDeclaration -> datatype . VARIABLE ASSIGN functionCall
+
+    VARIABLE        shift and go to state 22
+
+
+state 8
+
+    (21) prototype -> FUNC_START . values RPAREN
+    (22) prototype -> FUNC_START . RPAREN
+    (19) values -> . value COMMA values
+    (20) values -> . value
+    (30) value -> . number
+    (31) value -> . object
+    (32) value -> . arithmeticExpression
+    (33) value -> . STRING
+    (34) value -> . VARIABLE
+    (35) value -> . BOOLEAN
+    (24) number -> . INTEGER
+    (25) number -> . DOUBLE
+    (23) object -> . NEW prototype
+    (36) arithmeticExpression -> . value arithmeticOperator value
+    (37) arithmeticExpression -> . LPAREN value arithmeticOperator value RPAREN
+
+    RPAREN          shift and go to state 24
+    STRING          shift and go to state 29
+    VARIABLE        shift and go to state 30
+    BOOLEAN         shift and go to state 31
+    INTEGER         shift and go to state 32
+    DOUBLE          shift and go to state 33
+    NEW             shift and go to state 9
+    LPAREN          shift and go to state 34
+
+    values                         shift and go to state 23
+    value                          shift and go to state 25
+    number                         shift and go to state 26
+    object                         shift and go to state 27
+    arithmeticExpression           shift and go to state 28
+
+state 9
+
+    (23) object -> NEW . prototype
+    (21) prototype -> . FUNC_START values RPAREN
+    (22) prototype -> . FUNC_START RPAREN
+
+    FUNC_START      shift and go to state 8
+
+    prototype                      shift and go to state 35
+
+state 10
+
+    (5) datatype -> INT_TYPE .
+
+    VARIABLE        reduce using rule 5 (datatype -> INT_TYPE .)
+
+
+state 11
+
+    (6) datatype -> DOUBLE_TYPE .
+
+    VARIABLE        reduce using rule 6 (datatype -> DOUBLE_TYPE .)
+
+
+state 12
+
+    (7) datatype -> NUM_TYPE .
+
+    VARIABLE        reduce using rule 7 (datatype -> NUM_TYPE .)
+
+
+state 13
+
+    (8) datatype -> BOOL_TYPE .
+
+    VARIABLE        reduce using rule 8 (datatype -> BOOL_TYPE .)
+
+
+state 14
+
+    (9) datatype -> STRING_TYPE .
+
+    VARIABLE        reduce using rule 9 (datatype -> STRING_TYPE .)
+
+
+state 15
+
+    (10) datatype -> LIST_TYPE .
+
+    VARIABLE        reduce using rule 10 (datatype -> LIST_TYPE .)
+
+
+state 16
+
+    (11) datatype -> MAP_TYPE .
+
+    VARIABLE        reduce using rule 11 (datatype -> MAP_TYPE .)
+
+
+state 17
+
+    (12) datatype -> SET_TYPE .
+
+    VARIABLE        reduce using rule 12 (datatype -> SET_TYPE .)
+
+
+state 18
+
+    (13) datatype -> RUNES_TYPE .
+
+    VARIABLE        reduce using rule 13 (datatype -> RUNES_TYPE .)
+
+
+state 19
+
+    (14) datatype -> SYMBOL_TYPE .
+
+    VARIABLE        reduce using rule 14 (datatype -> SYMBOL_TYPE .)
+
+
+state 20
+
+    (1) body -> instruction SEMICOLON . body
+    (2) body -> instruction SEMICOLON .
+    (1) body -> . instruction SEMICOLON body
+    (2) body -> . instruction SEMICOLON
+    (3) instruction -> . functionCall
+    (4) instruction -> . variableDeclaration
+    (17) functionCall -> . prototype
+    (18) functionCall -> . object DOT prototype
+    (15) variableDeclaration -> . datatype VARIABLE ASSIGN value
+    (16) variableDeclaration -> . datatype VARIABLE ASSIGN functionCall
+    (21) prototype -> . FUNC_START values RPAREN
+    (22) prototype -> . FUNC_START RPAREN
+    (23) object -> . NEW prototype
+    (5) datatype -> . INT_TYPE
+    (6) datatype -> . DOUBLE_TYPE
+    (7) datatype -> . NUM_TYPE
+    (8) datatype -> . BOOL_TYPE
+    (9) datatype -> . STRING_TYPE
+    (10) datatype -> . LIST_TYPE
+    (11) datatype -> . MAP_TYPE
+    (12) datatype -> . SET_TYPE
+    (13) datatype -> . RUNES_TYPE
+    (14) datatype -> . SYMBOL_TYPE
+
+    $end            reduce using rule 2 (body -> instruction SEMICOLON .)
+    FUNC_START      shift and go to state 8
+    NEW             shift and go to state 9
+    INT_TYPE        shift and go to state 10
+    DOUBLE_TYPE     shift and go to state 11
+    NUM_TYPE        shift and go to state 12
+    BOOL_TYPE       shift and go to state 13
+    STRING_TYPE     shift and go to state 14
+    LIST_TYPE       shift and go to state 15
+    MAP_TYPE        shift and go to state 16
+    SET_TYPE        shift and go to state 17
+    RUNES_TYPE      shift and go to state 18
+    SYMBOL_TYPE     shift and go to state 19
+
+    instruction                    shift and go to state 2
+    body                           shift and go to state 36
+    functionCall                   shift and go to state 3
+    variableDeclaration            shift and go to state 4
+    prototype                      shift and go to state 5
+    object                         shift and go to state 6
+    datatype                       shift and go to state 7
+
+state 21
+
+    (18) functionCall -> object DOT . prototype
+    (21) prototype -> . FUNC_START values RPAREN
+    (22) prototype -> . FUNC_START RPAREN
+
+    FUNC_START      shift and go to state 8
+
+    prototype                      shift and go to state 37
+
+state 22
+
+    (15) variableDeclaration -> datatype VARIABLE . ASSIGN value
+    (16) variableDeclaration -> datatype VARIABLE . ASSIGN functionCall
+
+    ASSIGN          shift and go to state 38
+
+
+state 23
+
+    (21) prototype -> FUNC_START values . RPAREN
+
+    RPAREN          shift and go to state 39
+
+
+state 24
+
+    (22) prototype -> FUNC_START RPAREN .
+
+    SEMICOLON       reduce using rule 22 (prototype -> FUNC_START RPAREN .)
+    DOT             reduce using rule 22 (prototype -> FUNC_START RPAREN .)
+    COMMA           reduce using rule 22 (prototype -> FUNC_START RPAREN .)
+    PLUS            reduce using rule 22 (prototype -> FUNC_START RPAREN .)
+    MINUS           reduce using rule 22 (prototype -> FUNC_START RPAREN .)
+    TIMES           reduce using rule 22 (prototype -> FUNC_START RPAREN .)
+    DIVIDE          reduce using rule 22 (prototype -> FUNC_START RPAREN .)
+    RPAREN          reduce using rule 22 (prototype -> FUNC_START RPAREN .)
+
+
+state 25
+
+    (19) values -> value . COMMA values
+    (20) values -> value .
+    (36) arithmeticExpression -> value . arithmeticOperator value
+    (26) arithmeticOperator -> . PLUS
+    (27) arithmeticOperator -> . MINUS
+    (28) arithmeticOperator -> . TIMES
+    (29) arithmeticOperator -> . DIVIDE
+
+    COMMA           shift and go to state 40
+    RPAREN          reduce using rule 20 (values -> value .)
+    PLUS            shift and go to state 42
+    MINUS           shift and go to state 43
+    TIMES           shift and go to state 44
+    DIVIDE          shift and go to state 45
+
+    arithmeticOperator             shift and go to state 41
+
+state 26
+
+    (30) value -> number .
+
+    COMMA           reduce using rule 30 (value -> number .)
+    PLUS            reduce using rule 30 (value -> number .)
+    MINUS           reduce using rule 30 (value -> number .)
+    TIMES           reduce using rule 30 (value -> number .)
+    DIVIDE          reduce using rule 30 (value -> number .)
+    RPAREN          reduce using rule 30 (value -> number .)
+    SEMICOLON       reduce using rule 30 (value -> number .)
+
+
+state 27
+
+    (31) value -> object .
+
+    COMMA           reduce using rule 31 (value -> object .)
+    PLUS            reduce using rule 31 (value -> object .)
+    MINUS           reduce using rule 31 (value -> object .)
+    TIMES           reduce using rule 31 (value -> object .)
+    DIVIDE          reduce using rule 31 (value -> object .)
+    RPAREN          reduce using rule 31 (value -> object .)
+    SEMICOLON       reduce using rule 31 (value -> object .)
+
+
+state 28
+
+    (32) value -> arithmeticExpression .
+
+    COMMA           reduce using rule 32 (value -> arithmeticExpression .)
+    PLUS            reduce using rule 32 (value -> arithmeticExpression .)
+    MINUS           reduce using rule 32 (value -> arithmeticExpression .)
+    TIMES           reduce using rule 32 (value -> arithmeticExpression .)
+    DIVIDE          reduce using rule 32 (value -> arithmeticExpression .)
+    RPAREN          reduce using rule 32 (value -> arithmeticExpression .)
+    SEMICOLON       reduce using rule 32 (value -> arithmeticExpression .)
+
+
+state 29
+
+    (33) value -> STRING .
+
+    COMMA           reduce using rule 33 (value -> STRING .)
+    PLUS            reduce using rule 33 (value -> STRING .)
+    MINUS           reduce using rule 33 (value -> STRING .)
+    TIMES           reduce using rule 33 (value -> STRING .)
+    DIVIDE          reduce using rule 33 (value -> STRING .)
+    RPAREN          reduce using rule 33 (value -> STRING .)
+    SEMICOLON       reduce using rule 33 (value -> STRING .)
+
+
+state 30
+
+    (34) value -> VARIABLE .
+
+    COMMA           reduce using rule 34 (value -> VARIABLE .)
+    PLUS            reduce using rule 34 (value -> VARIABLE .)
+    MINUS           reduce using rule 34 (value -> VARIABLE .)
+    TIMES           reduce using rule 34 (value -> VARIABLE .)
+    DIVIDE          reduce using rule 34 (value -> VARIABLE .)
+    RPAREN          reduce using rule 34 (value -> VARIABLE .)
+    SEMICOLON       reduce using rule 34 (value -> VARIABLE .)
+
+
+state 31
+
+    (35) value -> BOOLEAN .
+
+    COMMA           reduce using rule 35 (value -> BOOLEAN .)
+    PLUS            reduce using rule 35 (value -> BOOLEAN .)
+    MINUS           reduce using rule 35 (value -> BOOLEAN .)
+    TIMES           reduce using rule 35 (value -> BOOLEAN .)
+    DIVIDE          reduce using rule 35 (value -> BOOLEAN .)
+    RPAREN          reduce using rule 35 (value -> BOOLEAN .)
+    SEMICOLON       reduce using rule 35 (value -> BOOLEAN .)
+
+
+state 32
+
+    (24) number -> INTEGER .
+
+    COMMA           reduce using rule 24 (number -> INTEGER .)
+    PLUS            reduce using rule 24 (number -> INTEGER .)
+    MINUS           reduce using rule 24 (number -> INTEGER .)
+    TIMES           reduce using rule 24 (number -> INTEGER .)
+    DIVIDE          reduce using rule 24 (number -> INTEGER .)
+    RPAREN          reduce using rule 24 (number -> INTEGER .)
+    SEMICOLON       reduce using rule 24 (number -> INTEGER .)
+
+
+state 33
+
+    (25) number -> DOUBLE .
+
+    COMMA           reduce using rule 25 (number -> DOUBLE .)
+    PLUS            reduce using rule 25 (number -> DOUBLE .)
+    MINUS           reduce using rule 25 (number -> DOUBLE .)
+    TIMES           reduce using rule 25 (number -> DOUBLE .)
+    DIVIDE          reduce using rule 25 (number -> DOUBLE .)
+    RPAREN          reduce using rule 25 (number -> DOUBLE .)
+    SEMICOLON       reduce using rule 25 (number -> DOUBLE .)
+
+
+state 34
+
+    (37) arithmeticExpression -> LPAREN . value arithmeticOperator value RPAREN
+    (30) value -> . number
+    (31) value -> . object
+    (32) value -> . arithmeticExpression
+    (33) value -> . STRING
+    (34) value -> . VARIABLE
+    (35) value -> . BOOLEAN
+    (24) number -> . INTEGER
+    (25) number -> . DOUBLE
+    (23) object -> . NEW prototype
+    (36) arithmeticExpression -> . value arithmeticOperator value
+    (37) arithmeticExpression -> . LPAREN value arithmeticOperator value RPAREN
+
+    STRING          shift and go to state 29
+    VARIABLE        shift and go to state 30
+    BOOLEAN         shift and go to state 31
+    INTEGER         shift and go to state 32
+    DOUBLE          shift and go to state 33
+    NEW             shift and go to state 9
+    LPAREN          shift and go to state 34
+
+    value                          shift and go to state 46
+    number                         shift and go to state 26
+    object                         shift and go to state 27
+    arithmeticExpression           shift and go to state 28
+
+state 35
+
+    (23) object -> NEW prototype .
+
+    DOT             reduce using rule 23 (object -> NEW prototype .)
+    COMMA           reduce using rule 23 (object -> NEW prototype .)
+    PLUS            reduce using rule 23 (object -> NEW prototype .)
+    MINUS           reduce using rule 23 (object -> NEW prototype .)
+    TIMES           reduce using rule 23 (object -> NEW prototype .)
+    DIVIDE          reduce using rule 23 (object -> NEW prototype .)
+    RPAREN          reduce using rule 23 (object -> NEW prototype .)
+    SEMICOLON       reduce using rule 23 (object -> NEW prototype .)
+
+
+state 36
+
+    (1) body -> instruction SEMICOLON body .
+
+    $end            reduce using rule 1 (body -> instruction SEMICOLON body .)
+
+
+state 37
+
+    (18) functionCall -> object DOT prototype .
+
+    SEMICOLON       reduce using rule 18 (functionCall -> object DOT prototype .)
+
+
+state 38
+
+    (15) variableDeclaration -> datatype VARIABLE ASSIGN . value
+    (16) variableDeclaration -> datatype VARIABLE ASSIGN . functionCall
+    (30) value -> . number
+    (31) value -> . object
+    (32) value -> . arithmeticExpression
+    (33) value -> . STRING
+    (34) value -> . VARIABLE
+    (35) value -> . BOOLEAN
+    (17) functionCall -> . prototype
+    (18) functionCall -> . object DOT prototype
+    (24) number -> . INTEGER
+    (25) number -> . DOUBLE
+    (23) object -> . NEW prototype
+    (36) arithmeticExpression -> . value arithmeticOperator value
+    (37) arithmeticExpression -> . LPAREN value arithmeticOperator value RPAREN
+    (21) prototype -> . FUNC_START values RPAREN
+    (22) prototype -> . FUNC_START RPAREN
+
+    STRING          shift and go to state 29
+    VARIABLE        shift and go to state 30
+    BOOLEAN         shift and go to state 31
+    INTEGER         shift and go to state 32
+    DOUBLE          shift and go to state 33
+    NEW             shift and go to state 9
+    LPAREN          shift and go to state 34
+    FUNC_START      shift and go to state 8
+
+    value                          shift and go to state 47
+    functionCall                   shift and go to state 48
+    number                         shift and go to state 26
+    object                         shift and go to state 49
+    arithmeticExpression           shift and go to state 28
+    prototype                      shift and go to state 5
+
+state 39
+
+    (21) prototype -> FUNC_START values RPAREN .
+
+    SEMICOLON       reduce using rule 21 (prototype -> FUNC_START values RPAREN .)
+    DOT             reduce using rule 21 (prototype -> FUNC_START values RPAREN .)
+    COMMA           reduce using rule 21 (prototype -> FUNC_START values RPAREN .)
+    PLUS            reduce using rule 21 (prototype -> FUNC_START values RPAREN .)
+    MINUS           reduce using rule 21 (prototype -> FUNC_START values RPAREN .)
+    TIMES           reduce using rule 21 (prototype -> FUNC_START values RPAREN .)
+    DIVIDE          reduce using rule 21 (prototype -> FUNC_START values RPAREN .)
+    RPAREN          reduce using rule 21 (prototype -> FUNC_START values RPAREN .)
+
+
+state 40
+
+    (19) values -> value COMMA . values
+    (19) values -> . value COMMA values
+    (20) values -> . value
+    (30) value -> . number
+    (31) value -> . object
+    (32) value -> . arithmeticExpression
+    (33) value -> . STRING
+    (34) value -> . VARIABLE
+    (35) value -> . BOOLEAN
+    (24) number -> . INTEGER
+    (25) number -> . DOUBLE
+    (23) object -> . NEW prototype
+    (36) arithmeticExpression -> . value arithmeticOperator value
+    (37) arithmeticExpression -> . LPAREN value arithmeticOperator value RPAREN
+
+    STRING          shift and go to state 29
+    VARIABLE        shift and go to state 30
+    BOOLEAN         shift and go to state 31
+    INTEGER         shift and go to state 32
+    DOUBLE          shift and go to state 33
+    NEW             shift and go to state 9
+    LPAREN          shift and go to state 34
+
+    value                          shift and go to state 25
+    values                         shift and go to state 50
+    number                         shift and go to state 26
+    object                         shift and go to state 27
+    arithmeticExpression           shift and go to state 28
+
+state 41
+
+    (36) arithmeticExpression -> value arithmeticOperator . value
+    (30) value -> . number
+    (31) value -> . object
+    (32) value -> . arithmeticExpression
+    (33) value -> . STRING
+    (34) value -> . VARIABLE
+    (35) value -> . BOOLEAN
+    (24) number -> . INTEGER
+    (25) number -> . DOUBLE
+    (23) object -> . NEW prototype
+    (36) arithmeticExpression -> . value arithmeticOperator value
+    (37) arithmeticExpression -> . LPAREN value arithmeticOperator value RPAREN
+
+    STRING          shift and go to state 29
+    VARIABLE        shift and go to state 30
+    BOOLEAN         shift and go to state 31
+    INTEGER         shift and go to state 32
+    DOUBLE          shift and go to state 33
+    NEW             shift and go to state 9
+    LPAREN          shift and go to state 34
+
+    value                          shift and go to state 51
+    number                         shift and go to state 26
+    object                         shift and go to state 27
+    arithmeticExpression           shift and go to state 28
+
+state 42
+
+    (26) arithmeticOperator -> PLUS .
+
+    STRING          reduce using rule 26 (arithmeticOperator -> PLUS .)
+    VARIABLE        reduce using rule 26 (arithmeticOperator -> PLUS .)
+    BOOLEAN         reduce using rule 26 (arithmeticOperator -> PLUS .)
+    INTEGER         reduce using rule 26 (arithmeticOperator -> PLUS .)
+    DOUBLE          reduce using rule 26 (arithmeticOperator -> PLUS .)
+    NEW             reduce using rule 26 (arithmeticOperator -> PLUS .)
+    LPAREN          reduce using rule 26 (arithmeticOperator -> PLUS .)
+
+
+state 43
+
+    (27) arithmeticOperator -> MINUS .
+
+    STRING          reduce using rule 27 (arithmeticOperator -> MINUS .)
+    VARIABLE        reduce using rule 27 (arithmeticOperator -> MINUS .)
+    BOOLEAN         reduce using rule 27 (arithmeticOperator -> MINUS .)
+    INTEGER         reduce using rule 27 (arithmeticOperator -> MINUS .)
+    DOUBLE          reduce using rule 27 (arithmeticOperator -> MINUS .)
+    NEW             reduce using rule 27 (arithmeticOperator -> MINUS .)
+    LPAREN          reduce using rule 27 (arithmeticOperator -> MINUS .)
+
+
+state 44
+
+    (28) arithmeticOperator -> TIMES .
+
+    STRING          reduce using rule 28 (arithmeticOperator -> TIMES .)
+    VARIABLE        reduce using rule 28 (arithmeticOperator -> TIMES .)
+    BOOLEAN         reduce using rule 28 (arithmeticOperator -> TIMES .)
+    INTEGER         reduce using rule 28 (arithmeticOperator -> TIMES .)
+    DOUBLE          reduce using rule 28 (arithmeticOperator -> TIMES .)
+    NEW             reduce using rule 28 (arithmeticOperator -> TIMES .)
+    LPAREN          reduce using rule 28 (arithmeticOperator -> TIMES .)
+
+
+state 45
+
+    (29) arithmeticOperator -> DIVIDE .
+
+    STRING          reduce using rule 29 (arithmeticOperator -> DIVIDE .)
+    VARIABLE        reduce using rule 29 (arithmeticOperator -> DIVIDE .)
+    BOOLEAN         reduce using rule 29 (arithmeticOperator -> DIVIDE .)
+    INTEGER         reduce using rule 29 (arithmeticOperator -> DIVIDE .)
+    DOUBLE          reduce using rule 29 (arithmeticOperator -> DIVIDE .)
+    NEW             reduce using rule 29 (arithmeticOperator -> DIVIDE .)
+    LPAREN          reduce using rule 29 (arithmeticOperator -> DIVIDE .)
+
+
+state 46
+
+    (37) arithmeticExpression -> LPAREN value . arithmeticOperator value RPAREN
+    (36) arithmeticExpression -> value . arithmeticOperator value
+    (26) arithmeticOperator -> . PLUS
+    (27) arithmeticOperator -> . MINUS
+    (28) arithmeticOperator -> . TIMES
+    (29) arithmeticOperator -> . DIVIDE
+
+    PLUS            shift and go to state 42
+    MINUS           shift and go to state 43
+    TIMES           shift and go to state 44
+    DIVIDE          shift and go to state 45
+
+    arithmeticOperator             shift and go to state 52
+
+state 47
+
+    (15) variableDeclaration -> datatype VARIABLE ASSIGN value .
+    (36) arithmeticExpression -> value . arithmeticOperator value
+    (26) arithmeticOperator -> . PLUS
+    (27) arithmeticOperator -> . MINUS
+    (28) arithmeticOperator -> . TIMES
+    (29) arithmeticOperator -> . DIVIDE
+
+    SEMICOLON       reduce using rule 15 (variableDeclaration -> datatype VARIABLE ASSIGN value .)
+    PLUS            shift and go to state 42
+    MINUS           shift and go to state 43
+    TIMES           shift and go to state 44
+    DIVIDE          shift and go to state 45
+
+    arithmeticOperator             shift and go to state 41
+
+state 48
+
+    (16) variableDeclaration -> datatype VARIABLE ASSIGN functionCall .
+
+    SEMICOLON       reduce using rule 16 (variableDeclaration -> datatype VARIABLE ASSIGN functionCall .)
+
+
+state 49
+
+    (31) value -> object .
+    (18) functionCall -> object . DOT prototype
+
+    PLUS            reduce using rule 31 (value -> object .)
+    MINUS           reduce using rule 31 (value -> object .)
+    TIMES           reduce using rule 31 (value -> object .)
+    DIVIDE          reduce using rule 31 (value -> object .)
+    SEMICOLON       reduce using rule 31 (value -> object .)
+    DOT             shift and go to state 21
+
+
+state 50
+
+    (19) values -> value COMMA values .
+
+    RPAREN          reduce using rule 19 (values -> value COMMA values .)
+
+
+state 51
+
+    (36) arithmeticExpression -> value arithmeticOperator value .
+    (36) arithmeticExpression -> value . arithmeticOperator value
+    (26) arithmeticOperator -> . PLUS
+    (27) arithmeticOperator -> . MINUS
+    (28) arithmeticOperator -> . TIMES
+    (29) arithmeticOperator -> . DIVIDE
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    COMMA           reduce using rule 36 (arithmeticExpression -> value arithmeticOperator value .)
+    RPAREN          reduce using rule 36 (arithmeticExpression -> value arithmeticOperator value .)
+    SEMICOLON       reduce using rule 36 (arithmeticExpression -> value arithmeticOperator value .)
+    PLUS            shift and go to state 42
+    MINUS           shift and go to state 43
+    TIMES           shift and go to state 44
+    DIVIDE          shift and go to state 45
+
+  ! PLUS            [ reduce using rule 36 (arithmeticExpression -> value arithmeticOperator value .) ]
+  ! MINUS           [ reduce using rule 36 (arithmeticExpression -> value arithmeticOperator value .) ]
+  ! TIMES           [ reduce using rule 36 (arithmeticExpression -> value arithmeticOperator value .) ]
+  ! DIVIDE          [ reduce using rule 36 (arithmeticExpression -> value arithmeticOperator value .) ]
+
+    arithmeticOperator             shift and go to state 41
+
+state 52
+
+    (37) arithmeticExpression -> LPAREN value arithmeticOperator . value RPAREN
+    (36) arithmeticExpression -> value arithmeticOperator . value
+    (30) value -> . number
+    (31) value -> . object
+    (32) value -> . arithmeticExpression
+    (33) value -> . STRING
+    (34) value -> . VARIABLE
+    (35) value -> . BOOLEAN
+    (24) number -> . INTEGER
+    (25) number -> . DOUBLE
+    (23) object -> . NEW prototype
+    (36) arithmeticExpression -> . value arithmeticOperator value
+    (37) arithmeticExpression -> . LPAREN value arithmeticOperator value RPAREN
+
+    STRING          shift and go to state 29
+    VARIABLE        shift and go to state 30
+    BOOLEAN         shift and go to state 31
+    INTEGER         shift and go to state 32
+    DOUBLE          shift and go to state 33
+    NEW             shift and go to state 9
+    LPAREN          shift and go to state 34
+
+    value                          shift and go to state 53
+    number                         shift and go to state 26
+    object                         shift and go to state 27
+    arithmeticExpression           shift and go to state 28
+
+state 53
+
+    (37) arithmeticExpression -> LPAREN value arithmeticOperator value . RPAREN
+    (36) arithmeticExpression -> value arithmeticOperator value .
+    (36) arithmeticExpression -> value . arithmeticOperator value
+    (26) arithmeticOperator -> . PLUS
+    (27) arithmeticOperator -> . MINUS
+    (28) arithmeticOperator -> . TIMES
+    (29) arithmeticOperator -> . DIVIDE
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    RPAREN          shift and go to state 54
+    PLUS            shift and go to state 42
+    MINUS           shift and go to state 43
+    TIMES           shift and go to state 44
+    DIVIDE          shift and go to state 45
+
+  ! PLUS            [ reduce using rule 36 (arithmeticExpression -> value arithmeticOperator value .) ]
+  ! MINUS           [ reduce using rule 36 (arithmeticExpression -> value arithmeticOperator value .) ]
+  ! TIMES           [ reduce using rule 36 (arithmeticExpression -> value arithmeticOperator value .) ]
+  ! DIVIDE          [ reduce using rule 36 (arithmeticExpression -> value arithmeticOperator value .) ]
+
+    arithmeticOperator             shift and go to state 41
+
+state 54
+
+    (37) arithmeticExpression -> LPAREN value arithmeticOperator value RPAREN .
+
+    COMMA           reduce using rule 37 (arithmeticExpression -> LPAREN value arithmeticOperator value RPAREN .)
+    PLUS            reduce using rule 37 (arithmeticExpression -> LPAREN value arithmeticOperator value RPAREN .)
+    MINUS           reduce using rule 37 (arithmeticExpression -> LPAREN value arithmeticOperator value RPAREN .)
+    TIMES           reduce using rule 37 (arithmeticExpression -> LPAREN value arithmeticOperator value RPAREN .)
+    DIVIDE          reduce using rule 37 (arithmeticExpression -> LPAREN value arithmeticOperator value RPAREN .)
+    RPAREN          reduce using rule 37 (arithmeticExpression -> LPAREN value arithmeticOperator value RPAREN .)
+    SEMICOLON       reduce using rule 37 (arithmeticExpression -> LPAREN value arithmeticOperator value RPAREN .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for PLUS in state 51 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 51 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 51 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 51 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 53 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 53 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 53 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 53 resolved as shift
