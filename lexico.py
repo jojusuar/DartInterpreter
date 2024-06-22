@@ -58,7 +58,6 @@ tokens = ('INTEGER', #inicio contribuciones Néstor
         'LOGICAL_AND',
         'LOGICAL_OR',
         'IF_NULL',
-        'FUNC_START',
         'ACCEPT_NULL'
     )
 
@@ -189,11 +188,6 @@ t_LOGICAL_AND = r'\&\&'
 t_LOGICAL_OR = r'\|\|'
 t_IF_NULL = r'\?\?'
 t_ACCEPT_NULL = r'\?'
-
-def t_FUNC_START(t):
-    r'[a-zA-Z_][a-zA-Z0-9_]*\('
-    t.type = reserved.get(t.value, 'FUNC_START')
-    return t
 
 def t_VARIABLE(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'

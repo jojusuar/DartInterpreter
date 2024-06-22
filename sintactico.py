@@ -5,8 +5,24 @@ def p_body(p):
     '''
     body : instruction SEMICOLON body
          | instruction SEMICOLON
-         | functionDeclaration body
-         | functionDeclaration
+         | noSemicolonStructure body
+         | noSemicolonStructure
+    '''
+
+def p_noSemicolonStructure(p):
+    '''
+    noSemicolonStructure : dataStructure
+                         | functionDeclaration
+    '''
+
+def p_dataStructure(p):
+    '''
+    dataStructure : if
+    '''
+
+def p_if(p): # se iran agregando las demas
+    '''
+    if : IF LPAREN value RPAREN LBRACE body RBRACE
     '''
 
 def p_import(p):
@@ -95,7 +111,7 @@ def p_functionCall(p): # engloba a print() y a stdin.readLineSync()
 
 def p_functionDeclaration(p):
     '''
-    functionDeclaration : datatype FUNC_START parameters RPAREN LBRACE body RBRACE
+    functionDeclaration : datatype VARIABLE LPAREN parameters RPAREN LBRACE body RBRACE
     '''
 
 def p_parameters(p):
@@ -112,8 +128,8 @@ def p_values(p):
 
 def p_prototype(p):
     '''
-    prototype : FUNC_START values RPAREN
-              | FUNC_START RPAREN
+    prototype : VARIABLE LPAREN values RPAREN
+              | VARIABLE LPAREN RPAREN
     '''
 
 def p_object(p):
@@ -155,6 +171,15 @@ def p_bitwiseOperator(p):
                     | BITWISE_XOR
     '''
 
+def p_comparator(p):
+    '''
+    comparator : EQUALS
+               | LESS_THAN
+               | MORE_THAN
+               | LESS_EQUAL
+               | MORE_EQUAL
+    '''
+
 def p_value(p):
     '''
     value : number
@@ -173,6 +198,14 @@ def p_value(p):
           | NOT boolean
           | variableValuePair
           | tuple
+          | comparison
+          | NOT LPAREN comparison RPAREN
+    '''
+
+def p_comparison(p):
+    '''
+    comparison : value comparator value
+               | LPAREN value comparator value RPAREN
     '''
 
 def p_logicExpression(p):
