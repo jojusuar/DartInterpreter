@@ -20,7 +20,7 @@ def p_dataStructure(p):
     dataStructure : if
     '''
 
-def p_if(p): # se iran agregando las demas
+def p_if(p): # se irán agregando las demás
     '''
     if : IF LPAREN value RPAREN LBRACE body RBRACE
     '''
