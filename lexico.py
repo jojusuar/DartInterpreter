@@ -58,8 +58,8 @@ tokens = ('INTEGER', #inicio contribuciones Néstor
         'LOGICAL_AND',
         'LOGICAL_OR',
         'IF_NULL',
-        'BOOLEAN',
-        'FUNC_START'
+        'FUNC_START',
+        'ACCEPT_NULL'
     )
 
 reserved = {
@@ -147,7 +147,6 @@ reserved = {
 tokens = tokens + tuple(reserved.values())
 
 # Regular expression rules for simple tokens
-t_BOOLEAN = r'(true|false)'
 t_DOT = r'\.'
 t_DOLLAR = r'\$'
 t_NOT = r'!'
@@ -189,6 +188,7 @@ t_BITWISE_XOR = r'\^'
 t_LOGICAL_AND = r'\&\&'
 t_LOGICAL_OR = r'\|\|'
 t_IF_NULL = r'\?\?'
+t_ACCEPT_NULL = r'\?'
 
 def t_FUNC_START(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*\('
