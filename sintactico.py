@@ -112,6 +112,7 @@ def p_functionCall(p): # engloba a print() y a stdin.readLineSync()
 def p_functionDeclaration(p):
     '''
     functionDeclaration : datatype VARIABLE LPAREN parameters RPAREN LBRACE body RBRACE
+                        | datatype VARIABLE LPAREN RPAREN LBRACE body RBRACE
     '''
 
 def p_parameters(p):
