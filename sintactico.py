@@ -85,6 +85,7 @@ def p_datatype(p):
     '''
     datatype : nullable_datatype
              | non_nullable_datatype
+             | VOID
              | recordTypes
              | dataStructureTypes
     '''
@@ -450,4 +451,4 @@ d *= 4
 
 """
 
-# validate_algorithm(algortimoNA)
+# validate_algorithm(algorithmJJ)
