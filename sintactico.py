@@ -273,4 +273,151 @@ def interactiveTest():
         result = parser.parse(s)
         print(result)
 
-interactiveTest()
+#interactiveTest()
+
+def validate_algorithm(algorithm):
+    # Resetea el estado de error antes de parsear
+    parser.error = 0
+    try:
+        result = parser.parse(algorithm, tracking=True)
+        if result is None and not parser.error:
+            print("El algoritmo es válido.")
+        else:
+            print("El algoritmo contiene errores de sintaxis.")
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+algorithmJJ = """
+abstract class MyAbstractClass {
+void nullTest;
+MyAbstractClass() {
+print('You just instanced a class!');
+}
+}
+class MyClass extends MyAbstractClass {
+(double, int, String) record = (0, 0, ' ');
+MyClass(double d, int i, String s) {
+this.nullTest = null;
+this.record = (d, i, s);
+}
+double doStuff() {
+int x = 0;
+double y = 0;
+for (int i = 0; i < 10; i++) {
+y -= record.$1;
+x += record.$2;
+}
+while (x > 0 || y <= 0) {
+x--;
+y++;
+}
+bool xAndYAreEqual = false;
+switch (y) {
+case 0:
+{
+if (x == 0) {
+xAndYAreEqual = true;
+}
+break;
+}
+default:
+break;
+}
+if (!xAndYAreEqual) {
+print('Bad luck!');
+} else {
+print('Good luck!');
+}
+int magicNumber = (record.$2 << 2) * 3;
+int mask = 633245;
+magicNumber = magicNumber & mask;
+magicNumber = magicNumber | record.$2;
+double magicDouble = magicNumber * (magicNumber % 2) / 5;
+return magicDouble;
+}
+}
+void main() {
+print('Test code by Jose Julio Suarez');
+var _myObject001 = new MyClass(2.3, 73, 'xd');
+print("Your soul number: " + _myObject001.doStuff());
+}
+"""
+
+algortimoNA = """
+void main() { 
+  int a = 10; 
+  double b = a; // Conversión implícita: int a double, permitido 
+  double c = 5.5; 
+  int d = c; // Error: Conversión implícita de double a int no permitida 
+  int e = c as int; // Error: Conversión explícita de double a int no válida en este contexto 
+  num f = c; // Correcto: double se puede asignar a num 
+  int g = f as int; // Error: Runtime error si f no es un int 
+} 
+
+ 
+
+int doSomething1(bool flag) { 
+  if (flag) { 
+    return 1; 
+  } else { 
+    return 0; // Correcto: ambas ramas retornan un valor 
+  } 
+} 
+
+String doSomething2(int code) { 
+  switch (code) { 
+    case 1: 
+      return "One"; 
+    case 2: 
+      return "Two"; 
+    default: 
+      return "Unknown"; // Correcto: todas las rutas retornan un valor 
+  } 
+} 
+
+void doSomething3(int num) { 
+  if (num > 0) { 
+    print('Positive'); 
+  } else { (num < 0) { 
+    print('Negative'); 
+  } else if { 
+    print('Zero'); //Incorrecto; no puede haber un else if despues de un else 
+  } 
+} 
+"""
+
+algorithmOL = """
+class Persona{
+Persona({
+required this.id,
+required this.nombre,
+required this.estatura,
+}) : assert(id>0),
+assert(name.isnotEmpty),
+assert(estatura > 0.0)
+
+final int id;
+final String nombre;
+final float estatura;
+}
+
+var list = ['a', 'b', 'c'];
+int a = 10;
+int b= 5;
+assert(a);
+a += 5;
+b -= 2;
+printf(a);
+printf(b);
+
+float c = 15.00;
+c /= 3;
+print(c);
+float d = 2;
+d *= 4
+
+
+"""
+
+validate_algorithm(algortimoNA)
