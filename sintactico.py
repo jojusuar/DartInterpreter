@@ -257,7 +257,7 @@ def p_tuple(p):
 
 # Error rule for syntax errors
 def p_error(p):
-    print("Syntax error in input!")
+    print(f'Syntax error in input! at token {p.value} (line {p.lineno})')
 
 # Build the parser
 parser = yacc.yacc()
