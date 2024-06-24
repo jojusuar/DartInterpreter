@@ -39,6 +39,26 @@ def p_instruction(p):
                 | import
     '''
 
+def p_classDeclaration(p):
+    '''
+    classDeclaration : CLASS VARIABLE LBRACE classBody RBRACE
+    classDeclaration : ABSTRACT CLASS VARIABLE LBRACE classBody RBRACE
+                     | CLASS VARIABLE EXTENDS VARIABLE LBRACE classBody RBRACE
+    '''
+
+def p_classBody(p):
+    '''
+    classBody : classMember classBody
+              | classMember
+    '''
+
+def p_classMember(p):
+    '''
+    classMember : functionDeclaration
+                | variableDeclarationUninitialized
+                | variableDeclarationInitialized
+    '''
+
 def p_non_nullable_datatype(p):
     '''
     non_nullable_datatype : INT_TYPE
