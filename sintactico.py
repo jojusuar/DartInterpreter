@@ -277,13 +277,8 @@ def interactiveTest():
 
 def validate_algorithm(algorithm):
     # Resetea el estado de error antes de parsear
-    parser.error = 0
     try:
-        result = parser.parse(algorithm, tracking=True)
-        if result is None and not parser.error:
-            print("El algoritmo es válido.")
-        else:
-            print("El algoritmo contiene errores de sintaxis.")
+        result = parser.parse(algorithm, tracking=True)       
     except Exception as e:
         print(f"Error: {e}")
 
