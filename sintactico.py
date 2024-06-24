@@ -199,6 +199,7 @@ def p_value(p):
           | NOT boolean
           | variableValuePair
           | tuple
+          | list
           | comparison
           | NOT LPAREN comparison RPAREN
     '''
@@ -249,6 +250,12 @@ def p_multipleDatatypes(p):
 def p_variableValuePair(p):
     '''
     variableValuePair : VARIABLE COLON value
+    '''
+
+def p_list(p):
+    '''
+    list : LBRACKET values RBRACKET
+         | LBRACKET RBRACKET
     '''
 
 def p_tuple(p):
