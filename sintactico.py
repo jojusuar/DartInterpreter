@@ -36,6 +36,7 @@ def p_instruction(p):
                 | variableDeclarationUninitialized
                 | variableDeclarationInitialized
                 | variableMutation
+                | classDeclaration
                 | import
     '''
 
