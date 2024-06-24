@@ -11,13 +11,13 @@ def p_body(p):
 
 def p_noSemicolonStructure(p):
     '''
-    noSemicolonStructure : dataStructure
+    noSemicolonStructure : controlStructure
                          | functionDeclaration
     '''
 
-def p_dataStructure(p):
+def p_controlStructure(p):
     '''
-    dataStructure : if
+    controlStructure : if
     '''
 
 def p_if(p): # se irán agregando las demás
@@ -73,6 +73,7 @@ def p_non_nullable_datatype(p):
              | RUNES_TYPE
              | SYMBOL_TYPE
              | VAR_TYPE
+             | VARIABLE
     '''
 
 def p_nullable_datatype(p):
@@ -85,6 +86,7 @@ def p_datatype(p):
     datatype : nullable_datatype
              | non_nullable_datatype
              | recordTypes
+             | dataStructureTypes
     '''
 
 def p_variableDeclarationUninitialized(p):
@@ -249,6 +251,11 @@ def p_bitwiseExpression(p):
                       | LPAREN value bitwiseOperator value RPAREN
     '''
 
+def p_dataStructureTypes(p):
+    '''
+    dataStructureTypes : datatype LESS_THAN multipleDatatypes MORE_THAN
+    '''
+
 def p_recordTypes(p): # estructura de datos de Jose Julio Suarez
     '''
     recordTypes : LPAREN multipleDatatypes RPAREN
@@ -301,7 +308,7 @@ def interactiveTest():
         result = parser.parse(s)
         print(result)
 
-#interactiveTest()
+interactiveTest()
 
 def validate_algorithm(algorithm):
     # Resetea el estado de error antes de parsear
@@ -443,4 +450,4 @@ d *= 4
 
 """
 
-validate_algorithm(algortimoNA)
+# validate_algorithm(algortimoNA)
