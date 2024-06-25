@@ -1,0 +1,225 @@
+Error  : ABSTRACT CLASS VARIABLE LBRACE datatype VARIABLE . LexToken(SEMICOLON,';',3,47)
+Error  : ABSTRACT CLASS VARIABLE LBRACE datatype VARIABLE . error
+Error  : ABSTRACT CLASS VARIABLE LBRACE datatype . error
+Error  : ABSTRACT CLASS VARIABLE LBRACE . error
+Error  : ABSTRACT CLASS VARIABLE . error
+Error  : ABSTRACT CLASS . error
+Error  : ABSTRACT . error
+Error  : . error
+Error  : VARIABLE LPAREN RPAREN . LexToken(LBRACE,'{',4,67)
+Error  : VARIABLE LPAREN RPAREN . error
+Error  : VARIABLE LPAREN . error
+Error  : VARIABLE . error
+Error  : . error
+Error  : body . LexToken(RBRACE,'}',6,107)
+Error  : body . error
+Error  : . error
+Error  : . LexToken(RBRACE,'}',7,109)
+Error  : CLASS VARIABLE EXTENDS VARIABLE LBRACE variableDeclarationInitialized . LexToken(SEMICOLON,';',9,193)
+Error  : CLASS VARIABLE EXTENDS VARIABLE LBRACE variableDeclarationInitialized . error
+Error  : CLASS VARIABLE EXTENDS VARIABLE LBRACE . error
+Error  : CLASS VARIABLE EXTENDS VARIABLE . error
+Error  : CLASS VARIABLE EXTENDS . error
+Error  : CLASS VARIABLE . error
+Error  : CLASS . error
+Error  : . error
+Error  : VARIABLE LPAREN . LexToken(DOUBLE_TYPE,'double',10,203)
+Error  : VARIABLE LPAREN . error
+Error  : VARIABLE . error
+Error  : . error
+Error  : VARIABLE . LexToken(COMMA,',',10,211)
+Error  : VARIABLE . error
+Error  : . error
+Error  : datatype VARIABLE . LexToken(COMMA,',',10,218)
+Error  : datatype VARIABLE . error
+Error  : datatype . error
+Error  : . error
+Error  : datatype VARIABLE . LexToken(RPAREN,')',10,228)
+Error  : datatype VARIABLE . error
+Error  : datatype . error
+Error  : . error
+Error  : . LexToken(LBRACE,'{',10,230)
+Error  : . LexToken(THIS,'this',11,232)
+Error  : . LexToken(DOT,'.',11,236)
+Error  : VARIABLE ASSIGN . LexToken(NULL,'null',11,248)
+Error  : VARIABLE ASSIGN . error
+Error  : VARIABLE . error
+Error  : . error
+Error  : . LexToken(SEMICOLON,';',11,252)
+Error  : . LexToken(THIS,'this',12,254)
+Error  : . LexToken(DOT,'.',12,258)
+Error  : body . LexToken(RBRACE,'}',13,279)
+Error  : body . error
+Error  : . error
+Error  : datatype VARIABLE LPAREN RPAREN LBRACE instruction SEMICOLON instruction SEMICOLON . LexToken(FOR,'for',17,325)
+Error  : datatype VARIABLE LPAREN RPAREN LBRACE instruction SEMICOLON instruction SEMICOLON . error
+Error  : datatype VARIABLE LPAREN RPAREN LBRACE instruction SEMICOLON instruction . error
+Error  : datatype VARIABLE LPAREN RPAREN LBRACE instruction SEMICOLON . error
+Error  : datatype VARIABLE LPAREN RPAREN LBRACE instruction . error
+Error  : datatype VARIABLE LPAREN RPAREN LBRACE . error
+Error  : datatype VARIABLE LPAREN RPAREN . error
+Error  : datatype VARIABLE LPAREN . error
+Error  : datatype VARIABLE . error
+Error  : datatype . error
+Error  : . error
+Error  : LPAREN datatype VARIABLE . LexToken(ASSIGN,'=',17,336)
+Error  : LPAREN datatype VARIABLE . error
+Error  : LPAREN datatype . error
+Error  : LPAREN . error
+Error  : . error
+Error  : . LexToken(INTEGER,0,17,338)
+Error  : . LexToken(SEMICOLON,';',17,339)
+Error  : datatype LESS_THAN . LexToken(INTEGER,10,17,345)
+Error  : datatype LESS_THAN . error
+Error  : datatype . error
+Error  : . error
+Error  : . LexToken(SEMICOLON,';',17,347)
+Error  : VARIABLE . LexToken(PLUS,'+',17,350)
+Error  : VARIABLE . error
+Error  : . error
+Error  : . LexToken(PLUS,'+',17,351)
+Error  : . LexToken(RPAREN,')',17,352)
+Error  : . LexToken(LBRACE,'{',17,354)
+Error  : VARIABLE immediateAssign VARIABLE . LexToken(DOT,'.',18,367)
+Error  : VARIABLE immediateAssign VARIABLE . error
+Error  : VARIABLE immediateAssign . error
+Error  : VARIABLE . error
+Error  : . error
+Error  : . LexToken(DOLLAR,'$',18,368)
+Error  : . LexToken(INTEGER,1,18,369)
+Error  : . LexToken(SEMICOLON,';',18,370)
+Error  : VARIABLE immediateAssign VARIABLE . LexToken(DOT,'.',19,383)
+Error  : VARIABLE immediateAssign VARIABLE . error
+Error  : VARIABLE immediateAssign . error
+Error  : VARIABLE . error
+Error  : . error
+Error  : . LexToken(DOLLAR,'$',19,384)
+Error  : . LexToken(INTEGER,2,19,385)
+Error  : . LexToken(SEMICOLON,';',19,386)
+Error  : . LexToken(RBRACE,'}',20,388)
+Error  : . LexToken(WHILE,'while',21,390)
+Error  : LPAREN datatype . LexToken(MORE_THAN,'>',21,399)
+Error  : LPAREN datatype . error
+Error  : LPAREN . error
+Error  : . error
+Error  : . LexToken(INTEGER,0,21,401)
+Error  : . LexToken(LOGICAL_OR,'||',21,403)
+Error  : VARIABLE . LexToken(LESS_EQUAL,'<=',21,408)
+Error  : VARIABLE . error
+Error  : . error
+Error  : . LexToken(INTEGER,0,21,411)
+Error  : . LexToken(RPAREN,')',21,412)
+Error  : . LexToken(LBRACE,'{',21,414)
+Error  : VARIABLE . LexToken(MINUS,'-',22,417)
+Error  : VARIABLE . error
+Error  : . error
+Error  : . LexToken(MINUS,'-',22,418)
+Error  : . LexToken(SEMICOLON,';',22,419)
+Error  : VARIABLE . LexToken(PLUS,'+',23,422)
+Error  : VARIABLE . error
+Error  : . error
+Error  : . LexToken(PLUS,'+',23,423)
+Error  : . LexToken(SEMICOLON,';',23,424)
+Error  : . LexToken(RBRACE,'}',24,426)
+Error  : instruction SEMICOLON . LexToken(SWITCH,'switch',26,456)
+Error  : instruction SEMICOLON . error
+Error  : instruction . error
+Error  : . error
+Error  : LPAREN multipleDatatypes RPAREN . LexToken(LBRACE,'{',26,467)
+Error  : LPAREN multipleDatatypes RPAREN . error
+Error  : LPAREN multipleDatatypes . error
+Error  : LPAREN . error
+Error  : . error
+Error  : . LexToken(CASE,'case',27,469)
+Error  : . LexToken(INTEGER,0,27,474)
+Error  : . LexToken(COLON,':',27,475)
+Error  : . LexToken(LBRACE,'{',28,477)
+Error  : IF LPAREN value RPAREN LBRACE body RBRACE . LexToken(BREAK,'break',32,517)
+Error  : IF LPAREN value RPAREN LBRACE body RBRACE . error
+Error  : IF LPAREN value RPAREN LBRACE body . error
+Error  : IF LPAREN value RPAREN LBRACE . error
+Error  : IF LPAREN value RPAREN . error
+Error  : IF LPAREN value . error
+Error  : IF LPAREN . error
+Error  : IF . error
+Error  : . error
+Error  : . LexToken(SEMICOLON,';',32,522)
+Error  : . LexToken(RBRACE,'}',33,524)
+Error  : . LexToken(DEFAULT,'default',34,526)
+Error  : . LexToken(COLON,':',34,533)
+Error  : . LexToken(BREAK,'break',35,535)
+Error  : . LexToken(SEMICOLON,';',35,540)
+Error  : . LexToken(RBRACE,'}',36,542)
+Error  : IF LPAREN value RPAREN LBRACE body RBRACE . LexToken(ELSE,'else',39,588)
+Error  : IF LPAREN value RPAREN LBRACE body RBRACE . error
+Error  : IF LPAREN value RPAREN LBRACE body . error
+Error  : IF LPAREN value RPAREN LBRACE . error
+Error  : IF LPAREN value RPAREN . error
+Error  : IF LPAREN value . error
+Error  : IF LPAREN . error
+Error  : IF . error
+Error  : . error
+Error  : . LexToken(LBRACE,'{',39,593)
+Error  : body . LexToken(RBRACE,'}',41,616)
+Error  : body . error
+Error  : . error
+Error  : variableDeclarationUninitialized ASSIGN LPAREN VARIABLE . LexToken(DOT,'.',42,643)
+Error  : variableDeclarationUninitialized ASSIGN LPAREN VARIABLE . error
+Error  : variableDeclarationUninitialized ASSIGN LPAREN . error
+Error  : variableDeclarationUninitialized ASSIGN . error
+Error  : variableDeclarationUninitialized . error
+Error  : . error
+Error  : . LexToken(DOLLAR,'$',42,644)
+Error  : . LexToken(INTEGER,2,42,645)
+Error  : . LexToken(LESS_THAN,'<',42,647)
+Error  : . LexToken(LESS_THAN,'<',42,648)
+Error  : . LexToken(INTEGER,2,42,650)
+Error  : . LexToken(RPAREN,')',42,651)
+Error  : . LexToken(TIMES,'*',42,653)
+Error  : . LexToken(INTEGER,3,42,655)
+Error  : . LexToken(SEMICOLON,';',42,656)
+Error  : instruction SEMICOLON instruction SEMICOLON VARIABLE ASSIGN value bitwiseOperator VARIABLE . LexToken(DOT,'.',45,745)
+Error  : instruction SEMICOLON instruction SEMICOLON VARIABLE ASSIGN value bitwiseOperator VARIABLE . error
+Error  : instruction SEMICOLON instruction SEMICOLON VARIABLE ASSIGN value bitwiseOperator . error
+Error  : instruction SEMICOLON instruction SEMICOLON VARIABLE ASSIGN value . error
+Error  : instruction SEMICOLON instruction SEMICOLON VARIABLE ASSIGN . error
+Error  : instruction SEMICOLON instruction SEMICOLON VARIABLE . error
+Error  : instruction SEMICOLON instruction SEMICOLON . error
+Error  : instruction SEMICOLON instruction . error
+Error  : instruction SEMICOLON . error
+Error  : instruction . error
+Error  : . error
+Error  : . LexToken(DOLLAR,'$',45,746)
+Error  : . LexToken(INTEGER,2,45,747)
+Error  : . LexToken(SEMICOLON,';',45,748)
+Error  : instruction SEMICOLON . LexToken(RETURN,'return',47,808)
+Error  : instruction SEMICOLON . error
+Error  : instruction . error
+Error  : . error
+Error  : VARIABLE . LexToken(SEMICOLON,';',47,826)
+Error  : VARIABLE . error
+Error  : . error
+Error  : . LexToken(RBRACE,'}',48,828)
+Error  : . LexToken(RBRACE,'}',49,830)
+Error  : datatype VARIABLE LPAREN RPAREN LBRACE instruction SEMICOLON instruction SEMICOLON VARIABLE LPAREN value arithmeticOperator VARIABLE . LexToken(DOT,'.',53,975)
+Error  : datatype VARIABLE LPAREN RPAREN LBRACE instruction SEMICOLON instruction SEMICOLON VARIABLE LPAREN value arithmeticOperator VARIABLE . error
+Error  : datatype VARIABLE LPAREN RPAREN LBRACE instruction SEMICOLON instruction SEMICOLON VARIABLE LPAREN value arithmeticOperator . error
+Error  : datatype VARIABLE LPAREN RPAREN LBRACE instruction SEMICOLON instruction SEMICOLON VARIABLE LPAREN value . error
+Error  : datatype VARIABLE LPAREN RPAREN LBRACE instruction SEMICOLON instruction SEMICOLON VARIABLE LPAREN . error
+Error  : datatype VARIABLE LPAREN RPAREN LBRACE instruction SEMICOLON instruction SEMICOLON VARIABLE . error
+Error  : datatype VARIABLE LPAREN RPAREN LBRACE instruction SEMICOLON instruction SEMICOLON . error
+Error  : datatype VARIABLE LPAREN RPAREN LBRACE instruction SEMICOLON instruction . error
+Error  : datatype VARIABLE LPAREN RPAREN LBRACE instruction SEMICOLON . error
+Error  : datatype VARIABLE LPAREN RPAREN LBRACE instruction . error
+Error  : datatype VARIABLE LPAREN RPAREN LBRACE . error
+Error  : datatype VARIABLE LPAREN RPAREN . error
+Error  : datatype VARIABLE LPAREN . error
+Error  : datatype VARIABLE . error
+Error  : datatype . error
+Error  : . error
+Error  : prototype . LexToken(RPAREN,')',53,985)
+Error  : prototype . error
+Error  : . error
+Error  : . LexToken(SEMICOLON,';',53,986)
+Error  : . LexToken(RBRACE,'}',54,988)
+Error  : . $end

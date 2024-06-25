@@ -1,4 +1,6 @@
 import ply.yacc as yacc
+import datetime
+import logging
 from lexico import tokens
 
 def p_body(p):
@@ -306,17 +308,21 @@ def interactiveTest():
         except EOFError:
             break
         if not s: continue
+        print(s)
         result = parser.parse(s)
         print(result)
 
-interactiveTest()
+# interactiveTest()
 
-def validate_algorithm(algorithm):
-    # Resetea el estado de error antes de parsear
-    try:
-        result = parser.parse(algorithm, tracking=True)       
-    except Exception as e:
-        print(f"Error: {e}")
+time = datetime.datetime.now()
+date = str(time.year) + str(time.month) + str(time.day)
+
+def validate_algorithm(algorithm, username):
+    log = logging.getLogger()
+    file_handler = logging.FileHandler('logs/sintactico-' + username + '-' + date + '-' + time.strftime('%Hh%M') + '.txt', 'w')
+    file_handler.setLevel(logging.DEBUG)
+    log.addHandler(file_handler)
+    result = parser.parse(algorithm, debug=log)
 
 
 algorithmJJ = """
@@ -451,4 +457,4 @@ d *= 4
 
 """
 
-# validate_algorithm(algorithmJJ)
+validate_algorithm(algorithmJJ, "jojusuar")
