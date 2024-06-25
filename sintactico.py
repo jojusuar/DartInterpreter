@@ -1,6 +1,7 @@
 import ply.yacc as yacc
 import datetime
 import logging
+import os
 from lexico import tokens
 
 def p_body(p):
@@ -357,10 +358,16 @@ date = str(time.year) + str(time.month) + str(time.day)
 
 def validate_algorithm(algorithm, username):
     log = logging.getLogger()
-    file_handler = logging.FileHandler('logs/sintactico-' + username + '-' + date + '-' + time.strftime('%Hh%M') + '.txt', 'w')
+    filename = 'logs/sintactico-' + username + '-' + date + '-' + time.strftime('%Hh%M') + '.txt'
+    file_handler = logging.FileHandler(filename, 'w')
     file_handler.setLevel(logging.DEBUG)
     log.addHandler(file_handler)
     result = parser.parse(algorithm, debug=log)
+    file = open(filename, 'a')
+    if os.path.getsize(filename) == 0:
+        file.write('No se detectaron errores sintácticos!')
+    file.close()
+
 
 
 algorithmJJ = """
@@ -495,4 +502,4 @@ d *= 4
 
 """
 
-validate_algorithm("x += record.$2;", "jojusuar")
+validate_algorithm(algorithmJJ, "jojusuar")
