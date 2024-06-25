@@ -100,7 +100,6 @@ def p_variableDeclarationUninitialized(p):
 def p_variableInitialization(p):
     '''
     variableInitialization : ASSIGN value
-                           | ASSIGN functionCall
     '''
 
 def p_variableDeclarationInitialized(p):
@@ -121,6 +120,13 @@ def p_immediateAssign(p):
                     | LSHIFT_ASSIGN
                     | RSHIFT_ASSIGN
                     | RUNSIGNED_SHIFT_ASSIGN
+                    | bitShift
+    '''
+
+def p_bitShift(p):
+    '''
+    bitShift : LESS_THAN LESS_THAN
+             | MORE_THAN MORE_THAN
     '''
 
 def p_variableMutation(p):
@@ -131,8 +137,14 @@ def p_variableMutation(p):
 
 def p_functionCall(p): # engloba a print() y a stdin.readLineSync()
     '''
-    functionCall : prototype    
-                 | VARIABLE DOT prototype
+    functionCall : VARIABLE DOT consecutiveCalls  
+                 | consecutiveCalls
+    '''
+
+def p_consecutiveCalls(p):
+    '''
+    consecutiveCalls : prototype DOT consecutiveCalls
+                     | prototype
     '''
 
 def p_functionDeclaration(p):
@@ -207,27 +219,54 @@ def p_comparator(p):
                | MORE_EQUAL
     '''
 
+def p_staticValue(p):
+    '''
+    staticValue : number
+                | MINUS number
+                | object
+                | arithmeticExpression
+                | MINUS LPAREN arithmeticExpression RPAREN
+                | bitwiseExpression
+                | MINUS LPAREN bitwiseExpression RPAREN
+                | logicExpression
+                | NOT LPAREN logicExpression RPAREN
+                | STRING
+                | VARIABLE
+                | NOT VARIABLE
+                | boolean
+                | NOT boolean
+                | variableValuePair
+                | tuple
+                | list
+                | comparison
+                | NOT LPAREN comparison RPAREN
+    '''
+
 def p_value(p):
     '''
-    value : number
-          | MINUS number
-          | object
-          | arithmeticExpression
-          | MINUS LPAREN arithmeticExpression RPAREN
-          | bitwiseExpression
-          | MINUS LPAREN bitwiseExpression RPAREN
-          | logicExpression
-          | NOT LPAREN logicExpression RPAREN
-          | STRING
-          | VARIABLE
-          | NOT VARIABLE
-          | boolean
-          | NOT boolean
-          | variableValuePair
-          | tuple
-          | list
-          | comparison
-          | NOT LPAREN comparison RPAREN
+    value : staticValue
+          | value immediateAssign value
+          | functionCall
+          | attributeValue
+    '''
+
+def p_attributeValue(p):
+    '''
+    attributeValue : VARIABLE DOT consecutiveAttributeCalls
+                   | VARIABLE consecutiveElementCalls
+    '''
+
+def p_consecutiveAttributeCalls(p):
+    '''
+    consecutiveAttributeCalls : DOLLAR INTEGER DOT consecutiveAttributeCalls
+                              | DOLLAR INTEGER
+                              
+    '''
+
+def p_consecutiveElementCalls(p):
+    '''
+    consecutiveElementCalls : LBRACKET INTEGER RBRACKET consecutiveElementCalls
+                            | LBRACKET INTEGER RBRACKET
     '''
 
 def p_comparison(p):
@@ -308,7 +347,6 @@ def interactiveTest():
         except EOFError:
             break
         if not s: continue
-        print(s)
         result = parser.parse(s)
         print(result)
 
@@ -457,4 +495,4 @@ d *= 4
 
 """
 
-validate_algorithm(algorithmJJ, "jojusuar")
+validate_algorithm("x += record.$2;", "jojusuar")
