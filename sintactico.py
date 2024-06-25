@@ -502,4 +502,5 @@ d *= 4
 
 """
 
-validate_algorithm(algorithmJJ, "jojusuar")
+# validate_algorithm(algorithmJJ, "jojusuar")
+#validate_algorithm(algortimoNA, 'niarias')
