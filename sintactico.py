@@ -10,6 +10,7 @@ def p_body(p):
          | instruction SEMICOLON
          | noSemicolonStructure body
          | noSemicolonStructure
+         | return
     '''
 
 def p_noSemicolonStructure(p):
@@ -22,11 +23,19 @@ def p_noSemicolonStructure(p):
 def p_controlStructure(p):
     '''
     controlStructure : if
+                     | for
     '''
 
 def p_if(p): # se irán agregando las demás
     '''
     if : IF LPAREN value RPAREN LBRACE body RBRACE
+    '''
+
+def p_for(p):
+    '''
+    for : FOR LPAREN variableDeclarationInitialized SEMICOLON value SEMICOLON variableMutation RPAREN LBRACE body RBRACE
+        | FOR LPAREN variableMutation SEMICOLON value SEMICOLON variableMutation RPAREN LBRACE body RBRACE
+        | FOR LPAREN VARIABLE SEMICOLON value SEMICOLON variableMutation RPAREN LBRACE body RBRACE
     '''
 
 def p_import(p):
@@ -61,6 +70,7 @@ def p_classMember(p):
     classMember : functionDeclaration
                 | variableDeclarationUninitialized SEMICOLON
                 | variableDeclarationInitialized SEMICOLON
+                | constructorDeclaration
     '''
 
 def p_non_nullable_datatype(p):
@@ -122,12 +132,21 @@ def p_immediateAssign(p):
                     | RSHIFT_ASSIGN
                     | RUNSIGNED_SHIFT_ASSIGN
     '''
-
+def p_immediateMutate(p):
+    '''
+    immediateMutate : PLUS PLUS
+                    | MINUS MINUS
+    '''
 def p_variableMutation(p):
     '''
     variableMutation : VARIABLE variableInitialization
                      | VARIABLE immediateAssign value
+                     | VARIABLE immediateMutate
+                     | THIS DOT VARIABLE variableInitialization
+                     | THIS DOT VARIABLE immediateAssign value
+                     | THIS DOT VARIABLE immediateMutate
     '''
+
 
 def p_functionCall(p): # engloba a print() y a stdin.readLineSync()
     '''
@@ -145,6 +164,18 @@ def p_functionDeclaration(p):
     '''
     functionDeclaration : datatype VARIABLE LPAREN parameters RPAREN LBRACE body RBRACE
                         | datatype VARIABLE LPAREN RPAREN LBRACE body RBRACE
+    '''
+
+def p_return(p):
+    '''
+    return : RETURN value SEMICOLON
+           | RETURN SEMICOLON
+    '''
+
+def p_constructorDeclaration(p):
+    '''
+    constructorDeclaration : VARIABLE LPAREN RPAREN LBRACE body RBRACE
+                           | VARIABLE LPAREN parameters RPAREN LBRACE body RBRACE
     '''
 
 def p_parameters(p):
@@ -241,6 +272,7 @@ def p_staticValue(p):
                 | comparison
                 | NOT LPAREN comparison RPAREN
                 | bitShift
+                | NULL
     '''
 
 def p_value(p):
