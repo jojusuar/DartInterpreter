@@ -275,6 +275,8 @@ def p_bitShiftOperator(p):
     '''
     bitShift : LESS_THAN LESS_THAN
              | MORE_THAN MORE_THAN
+             | LESS_THAN LESS_THAN LESS_THAN
+             | MORE_THAN MORE_THAN MORE_THAN
     '''
 
 def p_comparator(p):
@@ -573,7 +575,7 @@ d *= 4
 
 
 """
-#interactiveTest()
-validate_algorithm(algorithmJJ, "jojusuar")
+interactiveTest()
+#validate_algorithm(algorithmJJ, "jojusuar")
 #validate_algorithm(algortimoNA, 'niarias')
 #validate_algorithm(algorithmOL, 'OliLM')
