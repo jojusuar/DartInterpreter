@@ -16,6 +16,7 @@ def p_noSemicolonStructure(p):
     '''
     noSemicolonStructure : controlStructure
                          | functionDeclaration
+                         | classDeclaration
     '''
 
 def p_controlStructure(p):
@@ -39,7 +40,6 @@ def p_instruction(p):
                 | variableDeclarationUninitialized
                 | variableDeclarationInitialized
                 | variableMutation
-                | classDeclaration
                 | import
     '''
 
@@ -59,8 +59,8 @@ def p_classBody(p):
 def p_classMember(p):
     '''
     classMember : functionDeclaration
-                | variableDeclarationUninitialized
-                | variableDeclarationInitialized
+                | variableDeclarationUninitialized SEMICOLON
+                | variableDeclarationInitialized SEMICOLON
     '''
 
 def p_non_nullable_datatype(p):
@@ -121,13 +121,6 @@ def p_immediateAssign(p):
                     | LSHIFT_ASSIGN
                     | RSHIFT_ASSIGN
                     | RUNSIGNED_SHIFT_ASSIGN
-                    | bitShift
-    '''
-
-def p_bitShift(p):
-    '''
-    bitShift : LESS_THAN LESS_THAN
-             | MORE_THAN MORE_THAN
     '''
 
 def p_variableMutation(p):
@@ -211,6 +204,12 @@ def p_bitwiseOperator(p):
                     | BITWISE_XOR
     '''
 
+def p_bitShiftOperator(p):
+    '''
+    bitShift : LESS_THAN LESS_THAN
+             | MORE_THAN MORE_THAN
+    '''
+
 def p_comparator(p):
     '''
     comparator : EQUALS
@@ -241,6 +240,7 @@ def p_staticValue(p):
                 | list
                 | comparison
                 | NOT LPAREN comparison RPAREN
+                | bitShift
     '''
 
 def p_value(p):
@@ -274,6 +274,12 @@ def p_comparison(p):
     '''
     comparison : value comparator value
                | LPAREN value comparator value RPAREN
+    '''
+
+def p_bitShift(p):
+    '''
+    bitShift : value bitShift value
+             | LPAREN value bitShift value RPAREN
     '''
 
 def p_logicExpression(p):
@@ -350,8 +356,6 @@ def interactiveTest():
         if not s: continue
         result = parser.parse(s)
         print(result)
-
-# interactiveTest()
 
 time = datetime.datetime.now()
 date = str(time.year) + str(time.month) + str(time.day)
@@ -501,6 +505,6 @@ d *= 4
 
 
 """
-
+interactiveTest()
 # validate_algorithm(algorithmJJ, "jojusuar")
 #validate_algorithm(algortimoNA, 'niarias')
