@@ -89,7 +89,7 @@ def p_instruction(p):
 def p_classDeclaration(p):
     '''
     classDeclaration : CLASS VARIABLE LBRACE classBody RBRACE
-    classDeclaration : ABSTRACT CLASS VARIABLE LBRACE classBody RBRACE
+                     | ABSTRACT CLASS VARIABLE LBRACE classBody RBRACE
                      | CLASS VARIABLE EXTENDS VARIABLE LBRACE classBody RBRACE
     '''
 
@@ -104,7 +104,9 @@ def p_classMember(p):
     classMember : functionDeclaration
                 | variableDeclarationUninitialized SEMICOLON
                 | variableDeclarationInitialized SEMICOLON
+                | variableMutation SEMICOLON
                 | constructorDeclaration
+                | controlStructure
     '''
 
 def p_non_nullable_datatype(p):
@@ -571,6 +573,7 @@ d *= 4
 
 
 """
-interactiveTest()
-# validate_algorithm(algorithmJJ, "jojusuar")
+#interactiveTest()
+validate_algorithm(algorithmJJ, "jojusuar")
 #validate_algorithm(algortimoNA, 'niarias')
+#validate_algorithm(algorithmOL, 'OliLM')
