@@ -27,9 +27,16 @@ def p_controlStructure(p):
                      | switch
     '''
 
-def p_if(p): # se irán agregando las demás
+def p_condition(p): 
     '''
-    if : IF LPAREN value RPAREN LBRACE body RBRACE
+    condition : IF LPAREN value RPAREN LBRACE body RBRACE
+    '''
+
+def p_if(p):
+    '''
+    if : condition ELSE if
+       | condition ELSE LBRACE body RBRACE
+       | condition
     '''
 
 def p_for(p):
