@@ -10,7 +10,6 @@ def p_body(p):
          | instruction SEMICOLON
          | noSemicolonStructure body
          | noSemicolonStructure
-         | return
     '''
 
 def p_noSemicolonStructure(p):
@@ -24,6 +23,8 @@ def p_controlStructure(p):
     '''
     controlStructure : if
                      | for
+                     | while
+                     | switch
     '''
 
 def p_if(p): # se irán agregando las demás
@@ -38,6 +39,30 @@ def p_for(p):
         | FOR LPAREN VARIABLE SEMICOLON value SEMICOLON variableMutation RPAREN LBRACE body RBRACE
     '''
 
+def p_while(p):
+    '''
+    while : WHILE LPAREN value RPAREN LBRACE body RBRACE
+    '''
+
+def p_switch(p):
+    '''
+    switch : SWITCH LPAREN value RPAREN LBRACE multipleCases RBRACE
+    '''
+
+def p_multipleCases(p):
+    '''
+    multipleCases : case multipleCases
+                  | case DEFAULT COLON LBRACE body RBRACE
+                  | case DEFAULT COLON instruction SEMICOLON
+                  | case
+    '''
+
+def p_case(p):
+    '''
+    case : CASE value COLON LBRACE body RBRACE
+         | CASE value COLON instruction SEMICOLON
+    '''
+
 def p_import(p):
     '''
     import : IMPORT STRING
@@ -50,6 +75,8 @@ def p_instruction(p):
                 | variableDeclarationInitialized
                 | variableMutation
                 | import
+                | return
+                | BREAK
     '''
 
 def p_classDeclaration(p):
@@ -168,8 +195,8 @@ def p_functionDeclaration(p):
 
 def p_return(p):
     '''
-    return : RETURN value SEMICOLON
-           | RETURN SEMICOLON
+    return : RETURN value
+           | RETURN
     '''
 
 def p_constructorDeclaration(p):
