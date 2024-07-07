@@ -733,45 +733,45 @@ print("Your soul number: " + _myObject001.doStuff());
 
 algortimoNA = """
 void main() { 
-  int a = 10; 
-  double b = a; // Conversión implícita: int a double, permitido 
-  double c = 5.5; 
-  int d = c; // Error: Conversión implícita de double a int no permitida 
-  int e = c as int; // Error: Conversión explícita de double a int no válida en este contexto 
-  num f = c; // Correcto: double se puede asignar a num 
-  int g = f as int; // Error: Runtime error si f no es un int 
+int a = 10; 
+double b = a; // Conversión implícita: int a double, permitido 
+double c = 5.5; 
+int d = c; // Error: Conversión implícita de double a int no permitida 
+int e = c as int; // Error: Conversión explícita de double a int no válida en este contexto 
+num f = c; // Correcto: double se puede asignar a num 
+int g = f as int; // Error: Runtime error si f no es un int 
 } 
 
- 
+
 
 int doSomething1(bool flag) { 
-  if (flag) { 
-    return 1; 
-  } else { 
-    return 0; // Correcto: ambas ramas retornan un valor 
-  } 
+if (flag) { 
+return 1; 
+} else { 
+return 0; // Correcto: ambas ramas retornan un valor 
+} 
 } 
 
 String doSomething2(int code) { 
-  switch (code) { 
-    case 1: 
-      return "One"; 
-    case 2: 
-      return "Two"; 
-    default: 
-      return "Unknown"; // Correcto: todas las rutas retornan un valor 
-  } 
+switch (code) { 
+case 1: 
+return "One"; 
+case 2: 
+return "Two"; 
+default: 
+return "Unknown"; // Correcto: todas las rutas retornan un valor 
+} 
 } 
 
-void doSomething3(int num) { 
-  if (num > 0) { 
-    print('Positive'); 
-  } else { (num < 0) { 
-    print('Negative'); 
-  } else if { 
-    print('Zero'); //Incorrecto; no puede haber un else if despues de un else 
-  } 
+void doSomething3(int numero) { 
+if (numero > 0) { 
+print('Positive'); 
+} else if (numero < 0) { 
+print('Negative'); 
+} else { 
+print('Zero'); // Correcto, ahora el else está después de todos los else if
 } 
+}
 """
 
 algorithmOL = """
@@ -807,6 +807,6 @@ d *= 4
 
 """
 #interactiveTest()
-validate_algorithm(algorithmJJ, "jojusuar")
-#validate_algorithm(algortimoNA, 'niarias')
+# validate_algorithm(algorithmJJ, "jojusuar")
+validate_algorithm(algortimoNA, 'niarias')
 #validate_algorithm(algorithmOL, 'OliLM')

@@ -1,0 +1,8 @@
+Error semántico, la variable d esperaba un valor de tipo <class 'int'> y recibió <class 'float'>
+Error semántico, la variable e esperaba un valor de tipo <class 'int'> y recibió <class 'float'>
+Error semántico, la variable f esperaba un valor de tipo None y recibió <class 'float'>
+Error semántico, la variable g esperaba un valor de tipo <class 'int'> y recibió <class 'NoneType'>
+Error semántico, la variable flag no ha sido declarada
+Error semántico, la variable code no ha sido declarada
+Error semántico, la variable numero no ha sido declarada
+Error semántico, la variable numero no ha sido declarada
