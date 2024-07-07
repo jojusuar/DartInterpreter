@@ -186,10 +186,13 @@ def p_variableDeclarationInitialized(p):
     variableDeclarationInitialized : variableDeclarationUninitialized variableInitialization
     '''
      # Regla por José Julio Suárez, verifica que el valor que inicializa a una variable sea del tipo declarado
-    if isinstance(p[2], variables[p[1]][0]):
-        variables[p[1]] = [variables[p[1]][0], p[2]]
+    if  variables.get(p[1]):
+        if (variables[p[1]][0] != None) and isinstance(p[2], variables[p[1]][0]):
+            variables[p[1]] = [variables[p[1]][0], p[2]]
+        else:
+            print(f'Error semántico, la variable {p[1]} esperaba un valor de tipo {variables[p[1]][0]} y recibió {type(p[2])}')
     else:
-        print(f'Error semántico, la variable {p[1]} esperaba un valor de tipo {variables[p[1]][0]} y recibió {type(p[2])}')
+        print(f'Error semántico, la variable {p[1]} no ha sido declarada')
 
     
 def p_immediateAssign(p):
