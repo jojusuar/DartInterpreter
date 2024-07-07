@@ -229,25 +229,27 @@ def p_variableMutation(p):
                      | THIS DOT VARIABLE immediateMutate
     '''
     # Regla por José Julio Suárez, verifica que las variables reciban valores del mismo tipo que el declarado
-    if p[2] == '++':
-        if isinstance(variables[p[1]][1], numbers.Number):
-            variables[p[1]] = [variables[p[1]][0], variables[p[1]][1] + 1]
+    if variables.get(p[1]) and (variables[p[1]][0] != None):
+        if p[2] == '++':
+            if isinstance(variables[p[1]][1], numbers.Number):
+                variables[p[1]] = [variables[p[1]][0], variables[p[1]][1] + 1]
+            else:
+                print(f'Error semántico, el operador {p[2]} esperaba una variable de tipo {numbers.Number} y recibió {type(variables[p[1]][1])}')
+        elif p[2] == '--'  and isinstance(variables[p[1]][1], numbers.Number):
+            if isinstance(variables[p[1]][1], numbers.Number):
+                variables[p[1]] = [variables[p[1]][0], variables[p[1]][1] - 1]
+            else:
+                print(f'Error semántico, el operador {p[2]} esperaba una variable de tipo {numbers.Number} y recibió {type(variables[p[1]][1])}')
+        elif p[1] == 'this':
+            # Manejo de variables de instancia
+            pass
         else:
-            print(f'Error semántico, el operador {p[2]} esperaba una variable de tipo {numbers.Number} y recibió {type(variables[p[1]][1])}')
-    elif p[2] == '--'  and isinstance(variables[p[1]][1], numbers.Number):
-        if isinstance(variables[p[1]][1], numbers.Number):
-            variables[p[1]] = [variables[p[1]][0], variables[p[1]][1] - 1]
-        else:
-            print(f'Error semántico, el operador {p[2]} esperaba una variable de tipo {numbers.Number} y recibió {type(variables[p[1]][1])}')
-    elif p[1] == 'this':
-        # Manejo de variables de instancia
-        pass
-    else:
-        if isinstance(p[2], variables[p[1]][0]):
-            variables[p[1]] = [variables[p[1]][0], p[2]]
-        else:
-            print(f'Error semántico, la variable {p[1]} esperaba un valor de tipo {variables[p[1]][0]} y recibió {type(p[2])}')
-
+            if isinstance(p[2], variables[p[1]][0]):
+                variables[p[1]] = [variables[p[1]][0], p[2]]
+            else:
+                print(f'Error semántico, la variable {p[1]} esperaba un valor de tipo {variables[p[1]][0]} y recibió {type(p[2])}')
+    else: 
+        print(f'Error semántico, la variable {p[1]} no ha sido declarada')
 
 def p_functionCall(p): # engloba a print() y a stdin.readLineSync()
     '''
@@ -535,7 +537,6 @@ def p_arithmeticExpression(p):
                 print(f'Error semántico, el operador {p[3]} no espera cadenas')
         else:
             print(f'Error semántico, {p[1]} es de tipo {type(p[1])} mientras {p[3]} es de tipo {type(p[3])}')
-    print(p[0])
 
 def p_bitwiseExpression(p):
     '''
