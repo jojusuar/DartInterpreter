@@ -219,7 +219,7 @@ def t_INTEGER(t):
 
 
 def t_STRING(t):
-    r'(\".*\")|(\'.*\')'
+    r'(\"[^\"]*\")|(\'[^\']*\')'
     t.value = str(t.value)
     return t
 

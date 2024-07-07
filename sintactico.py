@@ -4,6 +4,8 @@ import logging
 import os
 from lexico import tokens
 
+variables = {}
+
 def p_body(p):
     '''
     body : instruction SEMICOLON body
@@ -72,7 +74,7 @@ def p_case(p):
 
 def p_import(p):
     '''
-    import : IMPORT STRING
+    import : IMPORT string
     '''
 
 def p_instruction(p):
@@ -242,12 +244,21 @@ def p_boolean(p):
     boolean : TRUE
             | FALSE
     '''
+    p[0] = p[1]
 
 def p_number(p):
     '''
     number : INTEGER
            | DOUBLE
     '''
+    p[0] = p[1]
+    
+def p_string(p):
+    '''
+    string : STRING
+    '''
+    p[0] = p[1]
+    p[0] = p[0].strip('\'"')
 
 def p_arithmeticOperator(p):
     '''
@@ -257,6 +268,7 @@ def p_arithmeticOperator(p):
                        | DIVIDE
                        | MOD
     '''
+    p[0] = p[1]
 
 def p_logicOperator(p):
     '''
@@ -270,14 +282,26 @@ def p_bitwiseOperator(p):
                     | BITWISE_OR
                     | BITWISE_XOR
     '''
+    p[0] = p[1]
 
 def p_bitShiftOperator(p):
     '''
-    bitShift : LESS_THAN LESS_THAN
-             | MORE_THAN MORE_THAN
-             | LESS_THAN LESS_THAN LESS_THAN
-             | MORE_THAN MORE_THAN MORE_THAN
+    bitShiftOperator : LESS_THAN LESS_THAN
+                     | MORE_THAN MORE_THAN
+                     | LESS_THAN LESS_THAN LESS_THAN
+                     | MORE_THAN MORE_THAN MORE_THAN
     '''
+    if len(p) == 3:
+        if p[1] == '>':
+            p[0] = '>>'
+        elif p[1] == '<':
+            p[0] = '<<'
+    elif len(p) == 4:
+        if p[1] == '>':
+            p[0] = '>>>'
+        elif p[1] == '<':
+            p[0] = '<<<'
+
 
 def p_comparator(p):
     '''
@@ -299,7 +323,7 @@ def p_staticValue(p):
                 | MINUS LPAREN bitwiseExpression RPAREN
                 | logicExpression
                 | NOT LPAREN logicExpression RPAREN
-                | STRING
+                | string
                 | VARIABLE
                 | NOT VARIABLE
                 | boolean
@@ -313,13 +337,22 @@ def p_staticValue(p):
                 | NULL
     '''
 
+    if p[1] == '-': ## NO TOPAR, es la unica forma de saber a que regla pertenece cada valor.
+        if p[2] == '(':
+            p[0] = -p[3]
+        else:
+            p[0] = -p[2]
+    else:
+        p[0] = p[1]
+    
+
 def p_value(p):
     '''
     value : staticValue
-          | value immediateAssign value
           | functionCall
           | attributeValue
     '''
+    p[0] = p[1]
 
 def p_attributeValue(p):
     '''
@@ -348,9 +381,43 @@ def p_comparison(p):
 
 def p_bitShift(p):
     '''
-    bitShift : value bitShift value
-             | LPAREN value bitShift value RPAREN
+    bitShift : value bitShiftOperator value
+             | LPAREN value bitShiftOperator value RPAREN
     '''
+    # Regla de José Julio Suárez
+    if len(p) == 4:
+        if isinstance(p[1], int) and isinstance(p[3], int):
+            if p[2] == '<<' or p[2] == '<<<':
+                p[0] = p[1] << p[3]
+            elif p[2] == '>>' or p[2] == '>>>':
+                p[0] = p[1] >> p[3]
+
+        if isinstance(p[1], int):
+            pass
+        else:
+            print(f'Error semántico, {p[1]} no es de tipo int')
+
+        if isinstance(p[3], int):
+            pass
+        else:
+            print(f'Error semántico, {p[3]} no es de tipo int')
+    
+    elif len(p) == 6:
+        if isinstance(p[2], int) and isinstance(p[4], int):
+            if p[3] == '>>' or p[3] == '>>>':
+                p[0] = p[2] >> p[4]
+            elif p[3] == '<<' or p[3] == '<<<':
+                p[0] = p[2] << p[4]
+
+        if isinstance(p[2], int):
+            pass
+        else:
+            print(f'Error semántico, {p[2]} no es de tipo int')
+
+        if isinstance(p[4], int):
+            pass
+        else:
+            print(f'Error semántico, {p[4]} no es de tipo int')
 
 def p_logicExpression(p):
     '''
@@ -363,12 +430,88 @@ def p_arithmeticExpression(p):
     arithmeticExpression : value arithmeticOperator value
                          | LPAREN value arithmeticOperator value RPAREN
     '''
+    # Regla de José Julio Suárez
+    if len(p) == 4:
+        if isinstance(p[1], (int, float, complex)) and isinstance(p[3], (int, float, complex)):
+            if p[2] == '+':
+                p[0] = p[1] + p[3]
+            elif p[2] == '-':
+                p[0] = p[1] - p[3]
+            elif p[2] == '*':
+                p[0] = p[1] * p[3]
+            elif p[2] == '/':
+                p[0] = p[1] / p[3]
+        elif isinstance(p[1], str) and isinstance(p[3], str):
+            if p[2] == '+':
+                p[0] = p[1] + p[3]
+            else:
+                print(f'El operador {p[2]} no espera cadenas')
+        else:
+            print(f'Error semántico, {p[1]} es de tipo {type(p[1])} mientras {p[3]} es de tipo {type(p[3])}')
+    
+    elif len(p) == 6:
+        if isinstance(p[2], (int, float, complex)) and isinstance(p[4], (int, float, complex)):
+            if p[3] == '+':
+                p[0] = p[2] + p[4]
+            elif p[3] == '-':
+                p[0] = p[2] - p[4]
+            elif p[3] == '*':
+                p[0] = p[2] * p[4]
+            elif p[3] == '/':
+                p[0] = p[2] / p[4]
+        elif isinstance(p[2], str) and isinstance(p[4], str):
+            if p[3] == '+':
+                p[0] = p[2] + p[4]
+            else:
+                print(f'Error semántico, el operador {p[3]} no espera cadenas')
+        else:
+            print(f'Error semántico, {p[1]} es de tipo {type(p[1])} mientras {p[3]} es de tipo {type(p[3])}')
 
 def p_bitwiseExpression(p):
     '''
     bitwiseExpression : value bitwiseOperator value
                       | LPAREN value bitwiseOperator value RPAREN
     '''
+    # Regla de José Julio Suárez
+    if len(p) == 4:
+        if isinstance(p[1], int) and isinstance(p[3], int): 
+            if p[2] == '&':
+                p[0] = p[1] & p[3]
+            elif p[2] == '|':
+                p[0] = p[1] | p[3]
+            elif p[2] == '^':
+                p[0] = p[1] ^ p[3]
+
+        if isinstance(p[1], int):
+            pass
+        else:
+            print(f'Error semántico, {p[1]} no es de tipo int')
+
+        if isinstance(p[3], int):
+            pass
+        else:
+            print(f'Error semántico, {p[3]} no es de tipo int')
+    
+    elif len(p) == 6:
+        if isinstance(p[2], int) and isinstance(p[4], int):
+            if p[3] == '&':
+                p[0] = p[2] & p[4]
+            elif p[3] == '|':
+                p[0] = p[2] | p[4]
+            elif p[3] == '^':
+                p[0] = p[2] ^ p[4]
+
+        if isinstance(p[2], int):
+            pass
+        else:
+            print(f'Error semántico, {p[2]} no es de tipo int')
+
+        if isinstance(p[4], int):
+            pass
+        else:
+            print(f'Error semántico, {p[4]} no es de tipo int')
+    
+
 
 def p_dataStructureTypes(p):
     '''
