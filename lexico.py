@@ -197,12 +197,10 @@ def t_VARIABLE(t):
 def t_COMMENT(t):
     r'//.*'
     t.type = reserved.get(t.value, 'COMMENT')
-    return t
 
 def t_MULTILINE_COMMENT(t):
     r'\/\*(?:(?!\*\/)[\S\s])*\*\/'
     t.type = reserved.get(t.value, 'MULTILINE_COMMENT')
-    return t
 
 
 # A regular expression rule with some action code

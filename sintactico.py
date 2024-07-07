@@ -85,6 +85,7 @@ def p_instruction(p):
     instruction : functionCall
                 | variableDeclarationUninitialized
                 | variableDeclarationInitialized
+                | variableDeclarationAS
                 | variableMutation
                 | import
                 | return
@@ -109,6 +110,7 @@ def p_classMember(p):
     classMember : functionDeclaration
                 | variableDeclarationUninitialized SEMICOLON
                 | variableDeclarationInitialized SEMICOLON
+                | variableDeclarationAS SEMICOLON
                 | variableMutation SEMICOLON
                 | constructorDeclaration
                 | controlStructure
@@ -196,6 +198,10 @@ def p_variableDeclarationInitialized(p):
     else:
         semanticLog.debug(f'Error semántico, la variable {p[1]} no ha sido declarada')
 
+def p_variableDeclarationAS(p):
+    '''
+    variableDeclarationAS : variableDeclarationInitialized AS datatype
+    '''
     
 def p_immediateAssign(p):
     '''
