@@ -1,0 +1,28 @@
+Error semántico, la variable record esperaba un valor de tipo None y recibió <class 'NoneType'>
+Error semántico, la variable null no ha sido declarada
+Error semántico, la variable this no ha sido declarada
+Error semántico, la variable d no ha sido declarada
+Error semántico, la variable i no ha sido declarada
+Error semántico, la variable s no ha sido declarada
+Error semántico, la variable this no ha sido declarada
+Error semántico, la variable y esperaba un valor de tipo <class 'numbers.Number'> y recibió <class 'NoneType'>
+Error semántico, la variable x esperaba un valor de tipo <class 'int'> y recibió <class 'NoneType'>
+Error semántico, la variable false no ha sido declarada
+Error semántico, la variable xAndYAreEqual esperaba un valor de tipo <class 'bool'> y recibió <class 'NoneType'>
+Error semántico, la variable true no ha sido declarada
+Error semántico, la variable xAndYAreEqual esperaba un valor de tipo <class 'bool'> y recibió <class 'NoneType'>
+Error semántico, la variable ! no ha sido declarada
+Error semántico, None no es de tipo int
+Error semántico, None es de tipo <class 'NoneType'> mientras 3 es de tipo <class 'int'>
+Error semántico, la variable magicNumber esperaba un valor de tipo <class 'int'> y recibió <class 'NoneType'>
+Error semántico, None no es de tipo int
+Error semántico, la variable magicNumber esperaba un valor de tipo <class 'int'> y recibió <class 'NoneType'>
+Error semántico, None no es de tipo int
+Error semántico, None no es de tipo int
+Error semántico, la variable magicNumber esperaba un valor de tipo <class 'int'> y recibió <class 'NoneType'>
+Error semántico, ( es de tipo <class 'str'> mientras % es de tipo <class 'str'>
+Error semántico, None es de tipo <class 'NoneType'> mientras 5 es de tipo <class 'int'>
+Error semántico, None es de tipo <class 'NoneType'> mientras None es de tipo <class 'NoneType'>
+Error semántico, la variable magicDouble esperaba un valor de tipo <class 'numbers.Number'> y recibió <class 'NoneType'>
+Error semántico, la variable _myObject001 esperaba un valor de tipo None y recibió <class 'NoneType'>
+Error semántico, "Your soul number: " es de tipo <class 'str'> mientras None es de tipo <class 'NoneType'>

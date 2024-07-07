@@ -7,6 +7,8 @@ from lexico import tokens
 
 variables = {}
 
+semanticLog = logging.getLogger('semantic')
+
 def p_body(p):
     '''
     body : instruction SEMICOLON body
@@ -173,7 +175,7 @@ def p_variableDeclarationUninitialized(p):
         variables[p[2]] = [p[1], None] # Vamos a guardar las variables como pares de tipo y valor
         p[0] = p[2]
     else:
-        print(f'Error semántico, la variable {p[1]} {p[2]} ya ha sido declarada.')
+        semanticLog.debug(f'Error semántico, la variable {p[1]} {p[2]} ya ha sido declarada.')
 
 def p_variableInitialization(p):
     '''
@@ -190,9 +192,9 @@ def p_variableDeclarationInitialized(p):
         if (variables[p[1]][0] != None) and isinstance(p[2], variables[p[1]][0]):
             variables[p[1]] = [variables[p[1]][0], p[2]]
         else:
-            print(f'Error semántico, la variable {p[1]} esperaba un valor de tipo {variables[p[1]][0]} y recibió {type(p[2])}')
+            semanticLog.debug(f'Error semántico, la variable {p[1]} esperaba un valor de tipo {variables[p[1]][0]} y recibió {type(p[2])}')
     else:
-        print(f'Error semántico, la variable {p[1]} no ha sido declarada')
+        semanticLog.debug(f'Error semántico, la variable {p[1]} no ha sido declarada')
 
     
 def p_immediateAssign(p):
@@ -234,12 +236,12 @@ def p_variableMutation(p):
             if isinstance(variables[p[1]][1], numbers.Number):
                 variables[p[1]] = [variables[p[1]][0], variables[p[1]][1] + 1]
             else:
-                print(f'Error semántico, el operador {p[2]} esperaba una variable de tipo {numbers.Number} y recibió {type(variables[p[1]][1])}')
+                semanticLog.debug(f'Error semántico, el operador {p[2]} esperaba una variable de tipo {numbers.Number} y recibió {type(variables[p[1]][1])}')
         elif p[2] == '--'  and isinstance(variables[p[1]][1], numbers.Number):
             if isinstance(variables[p[1]][1], numbers.Number):
                 variables[p[1]] = [variables[p[1]][0], variables[p[1]][1] - 1]
             else:
-                print(f'Error semántico, el operador {p[2]} esperaba una variable de tipo {numbers.Number} y recibió {type(variables[p[1]][1])}')
+                semanticLog.debug(f'Error semántico, el operador {p[2]} esperaba una variable de tipo {numbers.Number} y recibió {type(variables[p[1]][1])}')
         elif p[1] == 'this':
             # Manejo de variables de instancia
             pass
@@ -247,9 +249,9 @@ def p_variableMutation(p):
             if isinstance(p[2], variables[p[1]][0]):
                 variables[p[1]] = [variables[p[1]][0], p[2]]
             else:
-                print(f'Error semántico, la variable {p[1]} esperaba un valor de tipo {variables[p[1]][0]} y recibió {type(p[2])}')
+                semanticLog.debug(f'Error semántico, la variable {p[1]} esperaba un valor de tipo {variables[p[1]][0]} y recibió {type(p[2])}')
     else: 
-        print(f'Error semántico, la variable {p[1]} no ha sido declarada')
+        semanticLog.debug(f'Error semántico, la variable {p[1]} no ha sido declarada')
 
 def p_functionCall(p): # engloba a print() y a stdin.readLineSync()
     '''
@@ -405,7 +407,7 @@ def p_staticValue(p):
         p[0] = variables[p[1]][1] # Si el símbolo es encontrado en la tabla de variables, es una variable!
         return
     elif isinstance(p[1], str) and not (p[1][0] == '"' or p[1][0] == '\''): # si no está en la tabla y no es un string, es una variable sin declarar
-        print(f'Error semántico, la variable {p[1]} no ha sido declarada')
+        semanticLog.debug(f'Error semántico, la variable {p[1]} no ha sido declarada')
         return 
 
     if p[1] == '-':
@@ -466,12 +468,12 @@ def p_bitShift(p):
         if isinstance(p[1], int):
             pass
         else:
-            print(f'Error semántico, {p[1]} no es de tipo int')
+            semanticLog.debug(f'Error semántico, {p[1]} no es de tipo int')
 
         if isinstance(p[3], int):
             pass
         else:
-            print(f'Error semántico, {p[3]} no es de tipo int')
+            semanticLog.debug(f'Error semántico, {p[3]} no es de tipo int')
     
     elif len(p) == 6:
         if isinstance(p[2], int) and isinstance(p[4], int):
@@ -483,12 +485,12 @@ def p_bitShift(p):
         if isinstance(p[2], int):
             pass
         else:
-            print(f'Error semántico, {p[2]} no es de tipo int')
+            semanticLog.debug(f'Error semántico, {p[2]} no es de tipo int')
 
         if isinstance(p[4], int):
             pass
         else:
-            print(f'Error semántico, {p[4]} no es de tipo int')
+            semanticLog.debug(f'Error semántico, {p[4]} no es de tipo int')
 
 def p_logicExpression(p):
     '''
@@ -516,9 +518,9 @@ def p_arithmeticExpression(p):
             if p[2] == '+':
                 p[0] = p[1][:-1] + p[3][1:]
             else:
-                print(f'El operador {p[2]} no espera cadenas')
+                semanticLog.debug(f'El operador {p[2]} no espera cadenas')
         else:
-            print(f'Error semántico, {p[1]} es de tipo {type(p[1])} mientras {p[3]} es de tipo {type(p[3])}')
+            semanticLog.debug(f'Error semántico, {p[1]} es de tipo {type(p[1])} mientras {p[3]} es de tipo {type(p[3])}')
     
     elif len(p) == 6:
         if isinstance(p[2], (int, float, complex)) and isinstance(p[4], (int, float, complex)):
@@ -534,9 +536,9 @@ def p_arithmeticExpression(p):
             if p[3] == '+':
                 p[0] = p[2][:-1] + p[4][1:]
             else:
-                print(f'Error semántico, el operador {p[3]} no espera cadenas')
+                semanticLog.debug(f'Error semántico, el operador {p[3]} no espera cadenas')
         else:
-            print(f'Error semántico, {p[1]} es de tipo {type(p[1])} mientras {p[3]} es de tipo {type(p[3])}')
+            semanticLog.debug(f'Error semántico, {p[1]} es de tipo {type(p[1])} mientras {p[3]} es de tipo {type(p[3])}')
 
 def p_bitwiseExpression(p):
     '''
@@ -556,12 +558,12 @@ def p_bitwiseExpression(p):
         if isinstance(p[1], int):
             pass
         else:
-            print(f'Error semántico, {p[1]} no es de tipo int')
+            semanticLog.debug(f'Error semántico, {p[1]} no es de tipo int')
 
         if isinstance(p[3], int):
             pass
         else:
-            print(f'Error semántico, {p[3]} no es de tipo int')
+            semanticLog.debug(f'Error semántico, {p[3]} no es de tipo int')
     
     elif len(p) == 6:
         if isinstance(p[2], int) and isinstance(p[4], int):
@@ -575,12 +577,12 @@ def p_bitwiseExpression(p):
         if isinstance(p[2], int):
             pass
         else:
-            print(f'Error semántico, {p[2]} no es de tipo int')
+            semanticLog.debug(f'Error semántico, {p[2]} no es de tipo int')
 
         if isinstance(p[4], int):
             pass
         else:
-            print(f'Error semántico, {p[4]} no es de tipo int')
+            semanticLog.debug(f'Error semántico, {p[4]} no es de tipo int')
     
 
 
@@ -645,11 +647,20 @@ time = datetime.datetime.now()
 date = str(time.year) + str(time.month) + str(time.day)
 
 def validate_algorithm(algorithm, username):
-    log = logging.getLogger()
+    #syntax log
+    log = logging.getLogger('syntax')
     filename = 'logs/sintactico-' + username + '-' + date + '-' + time.strftime('%Hh%M') + '.txt'
     file_handler = logging.FileHandler(filename, 'w')
     file_handler.setLevel(logging.DEBUG)
     log.addHandler(file_handler)
+
+    #semantic log
+    layout = 'logs/semantico-' + username + '-' + date + '-' + time.strftime('%Hh%M') + '.txt'
+    handler = logging.FileHandler(layout, 'w')
+    handler.setLevel(logging.DEBUG)
+    semanticLog.addHandler(handler)
+    semanticLog.setLevel(logging.DEBUG)
+
     result = parser.parse(algorithm, debug=log)
     file = open(filename, 'a')
     if os.path.getsize(filename) == 0:
@@ -789,7 +800,7 @@ d *= 4
 
 
 """
-interactiveTest()
-#validate_algorithm(algorithmJJ, "jojusuar")
+#interactiveTest()
+validate_algorithm(algorithmJJ, "jojusuar")
 #validate_algorithm(algortimoNA, 'niarias')
 #validate_algorithm(algorithmOL, 'OliLM')
