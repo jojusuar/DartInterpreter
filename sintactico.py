@@ -2,6 +2,7 @@ import ply.yacc as yacc
 import datetime
 import logging
 import os
+import numbers
 from lexico import tokens
 
 variables = {}
@@ -126,11 +127,33 @@ def p_non_nullable_datatype(p):
              | VAR_TYPE
              | VARIABLE
     '''
+    if p[1] == 'int':
+        p[0] = int
+    elif p[1] == 'double':
+        p[0] = numbers.Number
+    elif p[1] == 'bool':
+        p[0] = bool
+    elif p[1] == 'String':
+        p[0] = str
+    elif p[1] == 'List':
+        p[0] = list
+    elif p[1] == 'Map':
+        p[0] = dict
+    elif p[1] == 'Set':
+        p[0] = set
+    elif p[1] == 'Runes':
+        pass # No hay análogo en Python
+    elif p[1] == 'Symbol':
+        pass # No hay análogo en Python
+    elif p[1] == 'var':
+        pass
+
 
 def p_nullable_datatype(p):
     '''
     nullable_datatype : non_nullable_datatype ACCEPT_NULL
     '''
+    p[0] = p[1] # todos los tipos de Python aceptan None, así que no se puede implementar un análogo directamente
 
 def p_datatype(p):
     '''
@@ -140,22 +163,35 @@ def p_datatype(p):
              | recordTypes
              | dataStructureTypes
     '''
+    p[0] = p[1]
 
 def p_variableDeclarationUninitialized(p):
     '''
     variableDeclarationUninitialized : datatype VARIABLE
     '''
+    if not variables.get(p[2]): 
+        variables[p[2]] = [p[1], None] # Vamos a guardar las variables como pares de tipo y valor
+        p[0] = p[2]
+    else:
+        print(f'Error semántico, la variable {p[1]} {p[2]} ya ha sido declarada.')
 
 def p_variableInitialization(p):
     '''
     variableInitialization : ASSIGN value
     '''
+    p[0] = p[2]
 
 def p_variableDeclarationInitialized(p):
     '''
     variableDeclarationInitialized : variableDeclarationUninitialized variableInitialization
     '''
+     # Regla por José Julio Suárez, verifica que el valor que inicializa a una variable sea del tipo declarado
+    if isinstance(p[2], variables[p[1]][0]):
+        variables[p[1]] = [variables[p[1]][0], p[2]]
+    else:
+        print(f'Error semántico, la variable {p[1]} esperaba un valor de tipo {variables[p[1]][0]} y recibió {type(p[2])}')
 
+    
 def p_immediateAssign(p):
     '''
     immediateAssign : SUM_ASSIGN
@@ -175,6 +211,11 @@ def p_immediateMutate(p):
     immediateMutate : PLUS PLUS
                     | MINUS MINUS
     '''
+    if p[1] == '+':
+        p[0] = '++'
+    else:
+        p[0] = '--'
+
 def p_variableMutation(p):
     '''
     variableMutation : VARIABLE variableInitialization
@@ -184,6 +225,25 @@ def p_variableMutation(p):
                      | THIS DOT VARIABLE immediateAssign value
                      | THIS DOT VARIABLE immediateMutate
     '''
+    # Regla por José Julio Suárez, verifica que las variables reciban valores del mismo tipo que el declarado
+    if p[2] == '++':
+        if isinstance(variables[p[1]][1], numbers.Number):
+            variables[p[1]] = [variables[p[1]][0], variables[p[1]][1] + 1]
+        else:
+            print(f'Error semántico, el operador {p[2]} esperaba una variable de tipo {numbers.Number} y recibió {type(variables[p[1]][1])}')
+    elif p[2] == '--'  and isinstance(variables[p[1]][1], numbers.Number):
+        if isinstance(variables[p[1]][1], numbers.Number):
+            variables[p[1]] = [variables[p[1]][0], variables[p[1]][1] - 1]
+        else:
+            print(f'Error semántico, el operador {p[2]} esperaba una variable de tipo {numbers.Number} y recibió {type(variables[p[1]][1])}')
+    elif p[1] == 'this':
+        # Manejo de variables de instancia
+        pass
+    else:
+        if isinstance(p[2], variables[p[1]][0]):
+            variables[p[1]] = [variables[p[1]][0], p[2]]
+        else:
+            print(f'Error semántico, la variable {p[1]} esperaba un valor de tipo {variables[p[1]][0]} y recibió {type(p[2])}')
 
 
 def p_functionCall(p): # engloba a print() y a stdin.readLineSync()
@@ -258,7 +318,6 @@ def p_string(p):
     string : STRING
     '''
     p[0] = p[1]
-    p[0] = p[0].strip('\'"')
 
 def p_arithmeticOperator(p):
     '''
@@ -336,8 +395,15 @@ def p_staticValue(p):
                 | bitShift
                 | NULL
     '''
+    # Regla de José Julio Suárez. NO TOPAR SIN CUIDADO, un cambio aquí tumba todas las otras reglas semánticas
+    if variables.get(p[1]):
+        p[0] = variables[p[1]][1] # Si el símbolo es encontrado en la tabla de variables, es una variable!
+        return
+    elif isinstance(p[1], str) and not (p[1][0] == '"' or p[1][0] == '\''): # si no está en la tabla y no es un string, es una variable sin declarar
+        print(f'Error semántico, la variable {p[1]} no ha sido declarada')
+        return 
 
-    if p[1] == '-': ## NO TOPAR, es la unica forma de saber a que regla pertenece cada valor.
+    if p[1] == '-':
         if p[2] == '(':
             p[0] = -p[3]
         else:
@@ -384,7 +450,7 @@ def p_bitShift(p):
     bitShift : value bitShiftOperator value
              | LPAREN value bitShiftOperator value RPAREN
     '''
-    # Regla de José Julio Suárez
+    # Regla de José Julio Suárez: verifica que las operaciones de bitShift solo se hagan entre números enteros
     if len(p) == 4:
         if isinstance(p[1], int) and isinstance(p[3], int):
             if p[2] == '<<' or p[2] == '<<<':
@@ -430,7 +496,7 @@ def p_arithmeticExpression(p):
     arithmeticExpression : value arithmeticOperator value
                          | LPAREN value arithmeticOperator value RPAREN
     '''
-    # Regla de José Julio Suárez
+    # Regla de José Julio Suárez, verifica las operaciones numéricas y la concatenación de Strings
     if len(p) == 4:
         if isinstance(p[1], (int, float, complex)) and isinstance(p[3], (int, float, complex)):
             if p[2] == '+':
@@ -443,7 +509,7 @@ def p_arithmeticExpression(p):
                 p[0] = p[1] / p[3]
         elif isinstance(p[1], str) and isinstance(p[3], str):
             if p[2] == '+':
-                p[0] = p[1] + p[3]
+                p[0] = p[1][:-1] + p[3][1:]
             else:
                 print(f'El operador {p[2]} no espera cadenas')
         else:
@@ -461,18 +527,19 @@ def p_arithmeticExpression(p):
                 p[0] = p[2] / p[4]
         elif isinstance(p[2], str) and isinstance(p[4], str):
             if p[3] == '+':
-                p[0] = p[2] + p[4]
+                p[0] = p[2][:-1] + p[4][1:]
             else:
                 print(f'Error semántico, el operador {p[3]} no espera cadenas')
         else:
             print(f'Error semántico, {p[1]} es de tipo {type(p[1])} mientras {p[3]} es de tipo {type(p[3])}')
+    print(p[0])
 
 def p_bitwiseExpression(p):
     '''
     bitwiseExpression : value bitwiseOperator value
                       | LPAREN value bitwiseOperator value RPAREN
     '''
-    # Regla de José Julio Suárez
+    # Regla de José Julio Suárez, verifica que las operaciones bitwise se lleven a cabo únicamente entre números enteros
     if len(p) == 4:
         if isinstance(p[1], int) and isinstance(p[3], int): 
             if p[2] == '&':
