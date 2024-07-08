@@ -347,6 +347,7 @@ def p_logicOperator(p):
     logicOperator : LOGICAL_AND
                   | LOGICAL_OR
     '''
+    p[0] = p[1]
 
 def p_bitwiseOperator(p):
     '''
@@ -409,7 +410,13 @@ def p_staticValue(p):
                 | NULL
     '''
     # Regla de José Julio Suárez. NO TOPAR SIN CUIDADO, un cambio aquí tumba todas las otras reglas semánticas
-    if variables.get(p[1]):
+    if p[1] == 'true':
+        p[0] = True
+        return
+    elif p[1] == 'false':
+        p[0] = False
+        return
+    elif variables.get(p[1]):
         p[0] = variables[p[1]][1] # Si el símbolo es encontrado en la tabla de variables, es una variable!
         return
     elif isinstance(p[1], str) and not (p[1][0] == '"' or p[1][0] == '\''): # si no está en la tabla y no es un string, es una variable sin declarar
@@ -826,7 +833,7 @@ d *= 4
 
 
 """
-#interactiveTest()
-# validate_algorithm(algorithmJJ, "jojusuar")
-validate_algorithm(algortimoNA, 'niarias')
+interactiveTest()
+#validate_algorithm(algorithmJJ, "jojusuar")
+#validate_algorithm(algortimoNA, 'niarias')
 #validate_algorithm(algorithmOL, 'OliLM')

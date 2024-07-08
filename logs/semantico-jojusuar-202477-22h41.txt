@@ -7,10 +7,7 @@ Error semántico, la variable s no ha sido declarada
 Error semántico, la variable this no ha sido declarada
 Error semántico, la variable y esperaba un valor de tipo <class 'numbers.Number'> y recibió <class 'NoneType'>
 Error semántico, la variable x esperaba un valor de tipo <class 'int'> y recibió <class 'NoneType'>
-Error semántico, la variable false no ha sido declarada
-Error semántico, la variable xAndYAreEqual esperaba un valor de tipo <class 'bool'> y recibió <class 'NoneType'>
-Error semántico, la variable true no ha sido declarada
-Error semántico, la variable xAndYAreEqual esperaba un valor de tipo <class 'bool'> y recibió <class 'NoneType'>
+Error Semantico: Los valores ingresados no son los esperados (0, None)
 Error semántico, la variable ! no ha sido declarada
 Error semántico, None no es de tipo int
 Error semántico, None es de tipo <class 'NoneType'> mientras 3 es de tipo <class 'int'>
