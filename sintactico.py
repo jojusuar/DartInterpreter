@@ -7,6 +7,7 @@ from lexico import tokens
 
 variables = {}
 
+log = logging.getLogger('syntax')
 semanticLog = logging.getLogger('semantic')
 
 def p_body(p):
@@ -661,7 +662,7 @@ def p_tuple(p):
 
 # Error rule for syntax errors
 def p_error(p):
-    print(f'Syntax error in input! at token {p.value} (line {p.lineno})')
+    print(f'Error sintáctico!')
 
 # Build the parser
 parser = yacc.yacc()
@@ -680,8 +681,9 @@ time = datetime.datetime.now()
 date = str(time.year) + str(time.month) + str(time.day)
 
 def validate_algorithm(algorithm, username):
+    syntaxOK = semanticsOK = False
+
     #syntax log
-    log = logging.getLogger('syntax')
     filename = 'logs/sintactico-' + username + '-' + date + '-' + time.strftime('%Hh%M') + '.txt'
     file_handler = logging.FileHandler(filename, 'w')
     file_handler.setLevel(logging.DEBUG)
@@ -698,7 +700,16 @@ def validate_algorithm(algorithm, username):
     file = open(filename, 'a')
     if os.path.getsize(filename) == 0:
         file.write('No se detectaron errores sintácticos!')
+        syntaxOK = True
     file.close()
+
+    file2 = open(layout, 'a')
+    if os.path.getsize(layout) == 0:
+        file2.write('No se detectaron errores semánticos!')
+        semanticsOK = True
+    file2.close()
+    
+    return (syntaxOK, semanticsOK, filename, layout)
 
 
 
@@ -833,7 +844,7 @@ d *= 4
 
 
 """
-interactiveTest()
+#interactiveTest()
 #validate_algorithm(algorithmJJ, "jojusuar")
 #validate_algorithm(algortimoNA, 'niarias')
 #validate_algorithm(algorithmOL, 'OliLM')

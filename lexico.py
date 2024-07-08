@@ -8,8 +8,12 @@
 
 import ply.lex as lex
 import datetime
+import logging
 
 # List of token names.   This is always required
+
+lexLog = logging.getLogger('lexical')
+illegal = []
 
 tokens = ('INTEGER', #inicio contribuciones Néstor
         'DOT',
@@ -234,7 +238,8 @@ t_ignore = ' \t'
 
 # Error handling rule
 def t_error(t):
-    print("Illegal character '%s'" % t.value[0])
+    lexLog.error("Illegal character '%s'" % t.value[0])
+    illegal.append(t.value[0])
     t.lexer.skip(1)
 
 
@@ -385,16 +390,20 @@ time = datetime.datetime.now()
 date = str(time.year) + str(time.month) + str(time.day)
 
 def testTokens(algorithm, username):
+    lexLayout = 'logs/lexico-' + username + '-' + date + '-' + time.strftime('%Hh%M') + '.txt'
+    lexHandler = logging.FileHandler(lexLayout, 'w')
+    lexLog.setLevel(logging.DEBUG)
+    lexHandler.setLevel(logging.DEBUG)
+    lexLog.addHandler(lexHandler)
     lexer.input(algorithm)
-    log = open('logs/lexico-' + username + '-' + date + '-' + time.strftime('%Hh%M') + '.txt', 'w')
     # Tokenize
     while True:
         tok = lexer.token()
         if not tok:
             break  # No more input
-        log.write(str(tok) + '\n')
-    log.close()
-    print('Log written!')
+        lexLog.debug(str(tok))
+    return (illegal, lexLayout)
+
 
 # testTokens(algorithmJJ, 'jojusuar')
 # testTokens(algortimoNA, 'Niariasve')
