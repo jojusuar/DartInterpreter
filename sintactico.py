@@ -503,6 +503,26 @@ def p_logicExpression(p):
     logicExpression : value logicOperator value
                     | LPAREN value logicOperator value RPAREN
     '''
+    # Regla de Néstor Arias
+    if len(p) == 4:
+        value1 = p[1]
+        op = p[2]
+        value2 = p[3]
+    else:
+        value1 = p[2]
+        op = p[3]
+        value2 = p[4]
+
+    if isinstance(value1, bool) and isinstance(value2, bool):
+        if op == '&&':
+            p[0] = value1 and value2
+        elif op == '||':
+            p[0] = value1 or value2
+        else:
+            semanticLog.debug(f'Error Semantico: operador {op} no es válido')
+    else:
+        semanticLog.debug(f'Error Semantico: Los valores ingresados no son los esperados ({value1}, {value2})')
+    
 
 def p_arithmeticExpression(p):
     '''
@@ -745,7 +765,7 @@ int g = f as int; // Error: Runtime error si f no es un int
 
 
 int doSomething1(bool flag) { 
-if (flag) { 
+if (true && false) { 
 return 1; 
 } else { 
 return 0; // Correcto: ambas ramas retornan un valor 
