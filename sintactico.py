@@ -385,6 +385,7 @@ def p_comparator(p):
                | LESS_EQUAL
                | MORE_EQUAL
     '''
+    p[0] = p[1]
 
 def p_staticValue(p):
     '''
@@ -465,6 +466,32 @@ def p_comparison(p):
     comparison : value comparator value
                | LPAREN value comparator value RPAREN
     '''
+    if len(p) == 4:
+        value1 = p[1]
+        operator = p[2]
+        value2 = p[3]
+    elif len(p) == 6:
+        value1 = p[2]
+        operator = p[3]
+        value2 = p[4]
+    
+    if type(value1) == type(value2):
+        if operator == '==':
+             p[0] = (value1 == value2)
+        elif isinstance(value1, str) or (isinstance(value1, numbers.Number) and not isinstance(value1, bool)):
+            if operator == '<':
+                p[0] = value1 < value2
+            if operator == '<=':
+                p[0] = value1 <= value2
+            if operator == '>':
+                p[0] = value1 > value2
+            if operator == '>=':
+                p[0] = value1 >= value2
+        else:
+            semanticLog.debug(f'Error semántico: La operación intentada no es permitida entre tipos {type(value1)}')
+    else:
+        semanticLog.debug(f'Error semántico: no se puede comparar un tipo {type(value1)} con un tipo {type(value2)}')
+
 
 def p_bitShift(p):
     '''
