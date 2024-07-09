@@ -218,6 +218,8 @@ def p_immediateAssign(p):
                     | RSHIFT_ASSIGN
                     | RUNSIGNED_SHIFT_ASSIGN
     '''
+    p[0] = p[1]
+
 def p_immediateMutate(p):
     '''
     immediateMutate : PLUS PLUS
@@ -249,6 +251,16 @@ def p_variableMutation(p):
                 variables[p[1]] = [variables[p[1]][0], variables[p[1]][1] - 1]
             else:
                 semanticLog.debug(f'Error semántico, el operador {p[2]} esperaba una variable de tipo {numbers.Number} y recibió {type(variables[p[1]][1])}')
+        elif p[2] == '+=':
+            if (isinstance(p[3], numbers.Number) or isinstance(p[3], str)) and isinstance(p[3], variables[p[1]][0]):
+                variables[p[1]] = [variables[p[1]][0], variables[p[1]][1] + p[3]]
+            else:
+                semanticLog.debug(f'Error semántico, la variable {p[1]} esperaba un valor de tipo {variables[p[1]][0]} y recibió {type(p[3])}')
+        elif p[2] == '-=':
+            if isinstance(p[3], numbers.Number) and issubclass(variables[p[1]][0], numbers.Number):
+                variables[p[1]] = [variables[p[1]][0], variables[p[1]][1] - p[3]]
+            else:
+                semanticLog.debug(f'Error semántico, el operador -= solo maneja tipos numéricos')
         elif p[1] == 'this':
             # Manejo de variables de instancia
             pass
