@@ -246,29 +246,41 @@ def p_variableMutation(p):
                 variables[p[1]] = [variables[p[1]][0], variables[p[1]][1] + 1]
             else:
                 semanticLog.debug(f'Error semántico, el operador {p[2]} esperaba una variable de tipo {numbers.Number} y recibió {type(variables[p[1]][1])}')
+
         elif p[2] == '--'  and isinstance(variables[p[1]][1], numbers.Number):
             if isinstance(variables[p[1]][1], numbers.Number):
                 variables[p[1]] = [variables[p[1]][0], variables[p[1]][1] - 1]
             else:
                 semanticLog.debug(f'Error semántico, el operador {p[2]} esperaba una variable de tipo {numbers.Number} y recibió {type(variables[p[1]][1])}')
+
         elif p[2] == '+=':
-            if (isinstance(p[3], numbers.Number) or isinstance(p[3], str)) and isinstance(p[3], variables[p[1]][0]) and type(p[3]) != bool:
-                variables[p[1]] = [variables[p[1]][0], variables[p[1]][1] + p[3]]
+            if variables[p[1]][1] != None:
+                if (isinstance(p[3], numbers.Number) or isinstance(p[3], str)) and isinstance(p[3], variables[p[1]][0]) and type(p[3]) != bool:
+                    variables[p[1]] = [variables[p[1]][0], variables[p[1]][1] + p[3]]
+                else:
+                    semanticLog.debug(f'Error semántico, la variable {p[1]} esperaba un valor de tipo {variables[p[1]][0]} y recibió {type(p[3])}')
             else:
-                semanticLog.debug(f'Error semántico, la variable {p[1]} esperaba un valor de tipo {variables[p[1]][0]} y recibió {type(p[3])}')
+                semanticLog.debug(f'Error semántico, la variable {p[1]} no ha sido inicializada')
+
         elif p[2] == '-=':
-            if isinstance(p[3], numbers.Number) and issubclass(variables[p[1]][0], numbers.Number) and type(p[3]) != bool:
-                variables[p[1]] = [variables[p[1]][0], variables[p[1]][1] - p[3]]
+            if variables[p[1]][1] != None:
+                if isinstance(p[3], numbers.Number) and issubclass(variables[p[1]][0], numbers.Number) and type(p[3]) != bool:
+                    variables[p[1]] = [variables[p[1]][0], variables[p[1]][1] - p[3]]
+                else:
+                    semanticLog.debug(f'Error semántico, el operador -= solo maneja tipos numéricos')
             else:
-                semanticLog.debug(f'Error semántico, el operador -= solo maneja tipos numéricos')
+                semanticLog.debug(f'Error semántico, la variable {p[1]} no ha sido inicializada')
+
         elif p[1] == 'this':
             # Manejo de variables de instancia
             pass
+        
         else:
             if isinstance(p[2], variables[p[1]][0]) and not (type(p[2]) == bool and issubclass(variables[p[1]][0], numbers.Number)):
                 variables[p[1]] = [variables[p[1]][0], p[2]]
             else:
                 semanticLog.debug(f'Error semántico, la variable {p[1]} esperaba un valor de tipo {variables[p[1]][0]} y recibió {type(p[2])}')
+
     else: 
         semanticLog.debug(f'Error semántico, la variable {p[1]} no ha sido declarada')
 
