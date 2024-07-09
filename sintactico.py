@@ -192,7 +192,7 @@ def p_variableDeclarationInitialized(p):
     '''
      # Regla por José Julio Suárez, verifica que el valor que inicializa a una variable sea del tipo declarado
     if  variables.get(p[1]):
-        if (variables[p[1]][0] != None) and isinstance(p[2], variables[p[1]][0]):
+        if (variables[p[1]][0] != None) and isinstance(p[2], variables[p[1]][0]) and not (type(p[2]) == bool and issubclass(variables[p[1]][0], numbers.Number)): # terrible regla, pero en Python bool es subclase de int. En Dart, esto no es cierto
             variables[p[1]] = [variables[p[1]][0], p[2]]
         else:
             semanticLog.debug(f'Error semántico, la variable {p[1]} esperaba un valor de tipo {variables[p[1]][0]} y recibió {type(p[2])}')
@@ -252,12 +252,12 @@ def p_variableMutation(p):
             else:
                 semanticLog.debug(f'Error semántico, el operador {p[2]} esperaba una variable de tipo {numbers.Number} y recibió {type(variables[p[1]][1])}')
         elif p[2] == '+=':
-            if (isinstance(p[3], numbers.Number) or isinstance(p[3], str)) and isinstance(p[3], variables[p[1]][0]):
+            if (isinstance(p[3], numbers.Number) or isinstance(p[3], str)) and isinstance(p[3], variables[p[1]][0]) and type(p[3]) != bool:
                 variables[p[1]] = [variables[p[1]][0], variables[p[1]][1] + p[3]]
             else:
                 semanticLog.debug(f'Error semántico, la variable {p[1]} esperaba un valor de tipo {variables[p[1]][0]} y recibió {type(p[3])}')
         elif p[2] == '-=':
-            if isinstance(p[3], numbers.Number) and issubclass(variables[p[1]][0], numbers.Number):
+            if isinstance(p[3], numbers.Number) and issubclass(variables[p[1]][0], numbers.Number) and type(p[3]) != bool:
                 variables[p[1]] = [variables[p[1]][0], variables[p[1]][1] - p[3]]
             else:
                 semanticLog.debug(f'Error semántico, el operador -= solo maneja tipos numéricos')
@@ -265,7 +265,7 @@ def p_variableMutation(p):
             # Manejo de variables de instancia
             pass
         else:
-            if isinstance(p[2], variables[p[1]][0]):
+            if isinstance(p[2], variables[p[1]][0]) and not (type(p[2]) == bool and issubclass(variables[p[1]][0], numbers.Number)):
                 variables[p[1]] = [variables[p[1]][0], p[2]]
             else:
                 semanticLog.debug(f'Error semántico, la variable {p[1]} esperaba un valor de tipo {variables[p[1]][0]} y recibió {type(p[2])}')
@@ -512,35 +512,35 @@ def p_bitShift(p):
     '''
     # Regla de José Julio Suárez: verifica que las operaciones de bitShift solo se hagan entre números enteros
     if len(p) == 4:
-        if isinstance(p[1], int) and isinstance(p[3], int):
+        if type(p[1]) == int and type(p[3]) == int:
             if p[2] == '<<' or p[2] == '<<<':
                 p[0] = p[1] << p[3]
             elif p[2] == '>>' or p[2] == '>>>':
                 p[0] = p[1] >> p[3]
 
-        if isinstance(p[1], int):
+        if type(p[1]) == int :
             pass
         else:
             semanticLog.debug(f'Error semántico, {p[1]} no es de tipo int')
 
-        if isinstance(p[3], int):
+        if type(p[3]) == int:
             pass
         else:
             semanticLog.debug(f'Error semántico, {p[3]} no es de tipo int')
     
     elif len(p) == 6:
-        if isinstance(p[2], int) and isinstance(p[4], int):
+        if type(p[2]) == int and type(p[4]) == int:
             if p[3] == '>>' or p[3] == '>>>':
                 p[0] = p[2] >> p[4]
             elif p[3] == '<<' or p[3] == '<<<':
                 p[0] = p[2] << p[4]
 
-        if isinstance(p[2], int):
+        if type(p[2]) == int:
             pass
         else:
             semanticLog.debug(f'Error semántico, {p[2]} no es de tipo int')
 
-        if isinstance(p[4], int):
+        if type(p[4]) == int:
             pass
         else:
             semanticLog.debug(f'Error semántico, {p[4]} no es de tipo int')
@@ -578,7 +578,7 @@ def p_arithmeticExpression(p):
     '''
     # Regla de José Julio Suárez, verifica las operaciones numéricas y la concatenación de Strings
     if len(p) == 4:
-        if isinstance(p[1], (int, float, complex)) and isinstance(p[3], (int, float, complex)):
+        if isinstance(p[1], (int, float, complex)) and isinstance(p[3], (int, float, complex)) and type(p[1]) != bool and type(p[3]) != bool:
             if p[2] == '+':
                 p[0] = p[1] + p[3]
             elif p[2] == '-':
@@ -596,7 +596,7 @@ def p_arithmeticExpression(p):
             semanticLog.debug(f'Error semántico, {p[1]} es de tipo {type(p[1])} mientras {p[3]} es de tipo {type(p[3])}')
     
     elif len(p) == 6:
-        if isinstance(p[2], (int, float, complex)) and isinstance(p[4], (int, float, complex)):
+        if isinstance(p[2], (int, float, complex)) and isinstance(p[4], (int, float, complex)) and type(p[2]) != bool and type(p[4]) != bool:
             if p[3] == '+':
                 p[0] = p[2] + p[4]
             elif p[3] == '-':
@@ -620,7 +620,7 @@ def p_bitwiseExpression(p):
     '''
     # Regla de José Julio Suárez, verifica que las operaciones bitwise se lleven a cabo únicamente entre números enteros
     if len(p) == 4:
-        if isinstance(p[1], int) and isinstance(p[3], int): 
+        if type(p[1]) == int and type(p[3]) == int: 
             if p[2] == '&':
                 p[0] = p[1] & p[3]
             elif p[2] == '|':
@@ -628,18 +628,18 @@ def p_bitwiseExpression(p):
             elif p[2] == '^':
                 p[0] = p[1] ^ p[3]
 
-        if isinstance(p[1], int):
+        if type(p[1]) == int:
             pass
         else:
             semanticLog.debug(f'Error semántico, {p[1]} no es de tipo int')
 
-        if isinstance(p[3], int):
+        if type(p[3]) == int:
             pass
         else:
             semanticLog.debug(f'Error semántico, {p[3]} no es de tipo int')
     
     elif len(p) == 6:
-        if isinstance(p[2], int) and isinstance(p[4], int):
+        if type(p[2]) == int and type(p[4]) == int:
             if p[3] == '&':
                 p[0] = p[2] & p[4]
             elif p[3] == '|':
@@ -647,12 +647,12 @@ def p_bitwiseExpression(p):
             elif p[3] == '^':
                 p[0] = p[2] ^ p[4]
 
-        if isinstance(p[2], int):
+        if type(p[2]) == int:
             pass
         else:
             semanticLog.debug(f'Error semántico, {p[2]} no es de tipo int')
 
-        if isinstance(p[4], int):
+        if type(p[4]) == int:
             pass
         else:
             semanticLog.debug(f'Error semántico, {p[4]} no es de tipo int')
