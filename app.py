@@ -1,23 +1,46 @@
 from PyQt5.QtWidgets import QApplication, QWidget, QPlainTextEdit, QTextBrowser, QVBoxLayout, QHBoxLayout, QPushButton
+from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import QSize
 import lexico
 import sintactico
 import sys
 import os
 
 app = QApplication(sys.argv)
+button_style = """
+    QPushButton {
+        border: none;
+        border-radius: 10px;
+        padding: 8px 16px;
+        max-height: 17px;
+        max-width: 250px;
+        background-color: #202020;
+        color: white;
+    }
+    QPushButton:hover {
+        background-color: #505050;
+    }
+    QPushButton:pressed {
+        background-color: #202020;
+    }
+"""
 
 # Ventana principal
 window = QWidget()
 window.setWindowTitle('Verificador de Dart')
-window.setGeometry(100, 100, 800, 600)
+window.setGeometry(100, 100, 960, 720)
+window.setFixedSize(960, 720)
+window.setStyleSheet('background-color: #303030; color: white; font-family: Consolas')
 
 layout = QVBoxLayout(window)
 buttonRow = QHBoxLayout(window)
 
 text_input = QPlainTextEdit(window)
 text_input.setPlaceholderText('Escribe código Dart aquí')
+text_input.setStyleSheet('background-color: #202020; font-size: 11pt; border-radius: 7px')
 
 text_output = QTextBrowser(window)
+text_output.setStyleSheet('background-color: #202020; font-size: 10pt; border-radius: 7px')
 
 layout.addWidget(text_input)
 layout.addLayout(buttonRow)
@@ -26,6 +49,9 @@ layout.addWidget(text_output)
 
 # Botón de validación
 validationButton = QPushButton('Validar', window)
+validationButton.setStyleSheet(button_style)
+validationButton.setIcon(QIcon('assets/check.png'))
+validationButton.setIconSize(validationButton.sizeHint()) 
 
 def cleanup(layout):
     os.remove(layout)
@@ -79,6 +105,9 @@ validationButton.clicked.connect(on_button_click)
 
 # botón para limpiar la consola
 cleanButton = QPushButton('Limpiar consola', window)
+cleanButton.setStyleSheet(button_style)
+cleanButton.setIcon(QIcon('assets/trash.png'))
+cleanButton.setIconSize(QSize(20, 20)) 
 
 def on_clean_click():
     text_output.setText('')
