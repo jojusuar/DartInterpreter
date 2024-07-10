@@ -192,9 +192,10 @@ def p_variableDeclarationInitialized(p):
     '''
      # Regla por José Julio Suárez, verifica que el valor que inicializa a una variable sea del tipo declarado
     if  variables.get(p[1]):
-        if (variables[p[1]][0] != None) and isinstance(p[2], variables[p[1]][0]) and not (type(p[2]) == bool and issubclass(variables[p[1]][0], numbers.Number)): # terrible regla, pero en Python bool es subclase de int. En Dart, esto no es cierto
+        if (variables[p[1]][0] != None) and isinstance(p[2], variables[p[1]][0]) and not (type(p[2]) == bool and variables[p[1]][0] == int): # terrible regla, pero en Python bool es subclase de int. En Dart, esto no es cierto
             variables[p[1]] = [variables[p[1]][0], p[2]]
         else:
+            print('entre aqui chcucha')
             semanticLog.debug(f'Error semántico, la variable {p[1]} esperaba un valor de tipo {variables[p[1]][0]} y recibió {type(p[2])}')
     else:
         semanticLog.debug(f'Error semántico, la variable {p[1]} no ha sido declarada')
