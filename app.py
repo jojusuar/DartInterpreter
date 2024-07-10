@@ -92,14 +92,14 @@ def on_button_click():
             for line in syntaxLogFile:
                 text_output.append(line.rstrip())
             text_output.append('')
-        cleanup(lexLog)
-        cleanup(syntaxLog)
-        cleanup(semanticsLog)
+        #cleanup(lexLog)     Entra en conflicto con el gestor de procesos de Windows, funciona en Linux
+        #cleanup(syntaxLog)  
+        #cleanup(semanticsLog)
     else:
         text_output.append('Análisis léxico fallido!')
         for token in illegalTokens:
             text_output.append(f'Caracter ilegal: {token}')
-        cleanup(lexLog)
+        #cleanup(lexLog)
     
 validationButton.clicked.connect(on_button_click)
 
