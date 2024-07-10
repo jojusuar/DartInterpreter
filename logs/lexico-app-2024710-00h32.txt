@@ -1,8 +1,0 @@
-LexToken(INT_TYPE,'int',1,0)
-LexToken(VARIABLE,'xd',1,4)
-LexToken(ASSIGN,'=',1,7)
-LexToken(MINUS,'-',1,9)
-LexToken(LPAREN,'(',1,10)
-LexToken(INTEGER,3,1,11)
-LexToken(RPAREN,')',1,12)
-LexToken(SEMICOLON,';',1,13)
