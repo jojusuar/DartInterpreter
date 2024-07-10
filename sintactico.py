@@ -404,6 +404,7 @@ def p_bitShiftOperator(p):
 def p_comparator(p):
     '''
     comparator : EQUALS
+               | NOT_EQUAL
                | LESS_THAN
                | MORE_THAN
                | LESS_EQUAL
@@ -502,6 +503,8 @@ def p_comparison(p):
     if type(value1) == type(value2):
         if operator == '==':
              p[0] = (value1 == value2)
+        elif operator == '!=':
+             p[0] = (value1 != value2)
         elif isinstance(value1, str) or (isinstance(value1, numbers.Number) and not isinstance(value1, bool)):
             if operator == '<':
                 p[0] = value1 < value2
