@@ -2,7 +2,9 @@
 - Néstor Arias
 - Oliver León
 - José Julio Suárez
-# Requisitos
+# Ejecutables
+Descargar el archivo .zip correspondiente desde Releases, descomprimir y correr el ejecutable.
+# Requisitos para código fuente
 - Versión más reciente de Python 3.X.X instalada y agregada al PATH del sistema. Se puede verificar abriendo una ventana de terminal y escribiendo el comando ```python``` ó ```python3```.
 # Instalación 
 ## Linux
