@@ -341,10 +341,12 @@ def p_boolean(p):
     '''
     boolean : TRUE
             | FALSE
-            | NOT TRUE
-            | NOT FALSE
+            | NOT boolean
+            | LPAREN boolean RPAREN
     '''
-    if len(p) == 3:
+    if len(p) == 4 and p[2] != None:
+        p[0] = p[2]
+    elif len(p) == 3 and p[2] != None:
         p[0] = not p[2]
     else:
         p[0] = p[1]
@@ -353,10 +355,12 @@ def p_number(p):
     '''
     number : INTEGER
            | DOUBLE
-           | MINUS INTEGER
-           | MINUS DOUBLE
+           | MINUS number
+           | LPAREN number RPAREN
     '''
-    if len(p) == 3:
+    if len(p) == 4 and p[2] != None:
+        p[0] = p[2]
+    elif len(p) == 3 and p[2] != None:
         p[0] = -p[2]
     else:
         p[0] = p[1]
@@ -366,6 +370,23 @@ def p_string(p):
     string : STRING
     '''
     p[0] = p[1]
+
+def p_variable(p):
+    '''
+    variable : VARIABLE
+             | MINUS variable
+             | NOT variable
+             | LPAREN variable RPAREN
+    '''
+    if len(p) == 4 and p[2] != None:
+        p[0] = p[2]
+    elif len(p) == 3 and p[2] != None:
+        if p[1] == '-':
+            p[0] = -p[2]
+        elif p[1] == '!':
+            p[0] = not p[2]
+    else:
+        p[0] = p[1]
 
 def p_arithmeticOperator(p):
     '''
@@ -425,36 +446,19 @@ def p_comparator(p):
 def p_staticValue(p):
     '''
     staticValue : number
-                | LPAREN number RPAREN
-                | MINUS LPAREN number RPAREN
                 | object
                 | arithmeticExpression
-                | MINUS LPAREN arithmeticExpression RPAREN
                 | bitwiseExpression
-                | MINUS LPAREN bitwiseExpression RPAREN
                 | logicExpression
-                | NOT LPAREN logicExpression RPAREN
-                | NOT LPAREN boolean RPAREN
                 | string
                 | boolean
-                | LPAREN boolean RPAREN
                 | variableValuePair
                 | tuple
                 | list
                 | comparison
-                | NOT LPAREN comparison RPAREN
                 | bitShift
-                | MINUS LPAREN bitShift RPAREN
                 | NULL
-                | VARIABLE
-                | MINUS VARIABLE
-                | MINUS LPAREN VARIABLE RPAREN
-                | MINUS LPAREN MINUS VARIABLE RPAREN
-                | LPAREN MINUS VARIABLE RPAREN
-                | NOT VARIABLE
-                | NOT LPAREN VARIABLE RPAREN
-                | NOT LPAREN NOT VARIABLE RPAREN
-                | LPAREN NOT VARIABLE RPAREN
+                | variable
     '''
     # Regla de José Julio Suárez. NO TOPAR SIN CUIDADO, un cambio aquí tumba todas las otras reglas semánticas
     if p[1] == 'true':
@@ -563,16 +567,19 @@ def p_consecutiveElementCalls(p):
 def p_comparison(p):
     '''
     comparison : value comparator value
-               | LPAREN value comparator value RPAREN
+               | NOT comparison
+               | LPAREN comparison RPAREN
     '''
     if len(p) == 4:
+        if p[1] == '(' and p[2] != None:
+            p[0] = p[2]
+            return
         value1 = p[1]
         operator = p[2]
         value2 = p[3]
-    elif len(p) == 6:
-        value1 = p[2]
-        operator = p[3]
-        value2 = p[4]
+    elif len(p) == 3 and p[2] != None:
+        p[0] = not p[2]
+        return
     
     if type(value1) == type(value2):
         if operator == '==':
@@ -597,10 +604,17 @@ def p_comparison(p):
 def p_bitShift(p):
     '''
     bitShift : value bitShiftOperator value
-             | LPAREN value bitShiftOperator value RPAREN
+             | LPAREN bitShift RPAREN
+             | MINUS bitShift
     '''
     # Regla de José Julio Suárez: verifica que las operaciones de bitShift solo se hagan entre números enteros
-    if len(p) == 4:
+    if len(p) == 3 and p[2] != None:
+        p[0] = -p[2]
+        return
+    elif len(p) == 4:
+        if p[1] == '(' and p[2] != None:
+            p[0] = p[2]
+            return
         if type(p[1]) == int and type(p[3]) == int:
             if p[2] == '<<' or p[2] == '<<<':
                 p[0] = p[1] << p[3]
@@ -637,17 +651,20 @@ def p_bitShift(p):
 def p_logicExpression(p):
     '''
     logicExpression : value logicOperator value
-                    | LPAREN value logicOperator value RPAREN
+                    | LPAREN logicExpression RPAREN
+                    | NOT logicExpression 
     '''
     # Regla de Néstor Arias
-    if len(p) == 4:
-        value1 = p[1]
-        op = p[2]
-        value2 = p[3]
-    else:
-        value1 = p[2]
-        op = p[3]
-        value2 = p[4]
+    if p[1] == '(' and p[2] != None:
+        p[0] = p[2]
+        return
+    elif p[1] == '!' and p[2] != None:
+        p[0] = not p[2]
+        return
+
+    value1 = p[1]
+    op = p[2]
+    value2 = p[3]
 
     if isinstance(value1, bool) and isinstance(value2, bool):
         if op == '&&':
@@ -663,10 +680,16 @@ def p_logicExpression(p):
 def p_arithmeticExpression(p):
     '''
     arithmeticExpression : value arithmeticOperator value
-                         | LPAREN value arithmeticOperator value RPAREN
+                         | MINUS arithmeticExpression
+                         | LPAREN arithmeticExpression RPAREN
     '''
     # Regla de José Julio Suárez, verifica las operaciones numéricas y la concatenación de Strings
-    if len(p) == 4:
+    if len(p) == 3 and p[2] != None:
+        p[0] = -p[2]
+    elif len(p) == 4:
+        if p[1] == '(' and p[2] != None:
+            p[0] = p[2]
+            return
         if isinstance(p[1], (int, float, complex)) and isinstance(p[3], (int, float, complex)) and type(p[1]) != bool and type(p[3]) != bool:
             if p[2] == '+':
                 p[0] = p[1] + p[3]
@@ -705,11 +728,18 @@ def p_arithmeticExpression(p):
 def p_bitwiseExpression(p):
     '''
     bitwiseExpression : value bitwiseOperator value
-                      | LPAREN value bitwiseOperator value RPAREN
+                      | LPAREN bitwiseExpression RPAREN
+                      | MINUS bitwiseExpression
     '''
     # Regla de José Julio Suárez, verifica que las operaciones bitwise se lleven a cabo únicamente entre números enteros
-    if len(p) == 4:
-        if type(p[1]) == int and type(p[3]) == int: 
+    if len(p) == 3 and p[2] != None:
+        p[0] = -p[2]
+        return
+    elif len(p) == 4:
+        if p[1] == '(' and p[2] != None:
+            p[0] = p[2]
+            return
+        elif type(p[1]) == int and type(p[3]) == int: 
             if p[2] == '&':
                 p[0] = p[1] & p[3]
             elif p[2] == '|':
