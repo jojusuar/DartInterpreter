@@ -276,7 +276,7 @@ def p_variableMutation(p):
             pass
         
         else:
-            if isinstance(p[2], variables[p[1]][0]) and not (type(p[2]) == bool and issubclass(variables[p[1]][0], numbers.Number)):
+            if isinstance(p[2], variables[p[1]][0]) and not (type(p[2]) == bool and variables[p[1]][0] == int):
                 variables[p[1]] = [variables[p[1]][0], p[2]]
             else:
                 semanticLog.debug(f'Error semántico, la variable {p[1]} esperaba un valor de tipo {variables[p[1]][0]} y recibió {type(p[2])}')
@@ -341,15 +341,25 @@ def p_boolean(p):
     '''
     boolean : TRUE
             | FALSE
+            | NOT TRUE
+            | NOT FALSE
     '''
-    p[0] = p[1]
+    if len(p) == 3:
+        p[0] = not p[2]
+    else:
+        p[0] = p[1]
 
 def p_number(p):
     '''
     number : INTEGER
            | DOUBLE
+           | MINUS INTEGER
+           | MINUS DOUBLE
     '''
-    p[0] = p[1]
+    if len(p) == 3:
+        p[0] = -p[2]
+    else:
+        p[0] = p[1]
     
 def p_string(p):
     '''
@@ -415,7 +425,8 @@ def p_comparator(p):
 def p_staticValue(p):
     '''
     staticValue : number
-                | MINUS number
+                | LPAREN number RPAREN
+                | MINUS LPAREN number RPAREN
                 | object
                 | arithmeticExpression
                 | MINUS LPAREN arithmeticExpression RPAREN
@@ -423,18 +434,27 @@ def p_staticValue(p):
                 | MINUS LPAREN bitwiseExpression RPAREN
                 | logicExpression
                 | NOT LPAREN logicExpression RPAREN
+                | NOT LPAREN boolean RPAREN
                 | string
-                | VARIABLE
-                | NOT VARIABLE
                 | boolean
-                | NOT boolean
+                | LPAREN boolean RPAREN
                 | variableValuePair
                 | tuple
                 | list
                 | comparison
                 | NOT LPAREN comparison RPAREN
                 | bitShift
+                | MINUS LPAREN bitShift RPAREN
                 | NULL
+                | VARIABLE
+                | MINUS VARIABLE
+                | MINUS LPAREN VARIABLE RPAREN
+                | MINUS LPAREN MINUS VARIABLE RPAREN
+                | LPAREN MINUS VARIABLE RPAREN
+                | NOT VARIABLE
+                | NOT LPAREN VARIABLE RPAREN
+                | NOT LPAREN NOT VARIABLE RPAREN
+                | LPAREN NOT VARIABLE RPAREN
     '''
     # Regla de José Julio Suárez. NO TOPAR SIN CUIDADO, un cambio aquí tumba todas las otras reglas semánticas
     if p[1] == 'true':
@@ -443,18 +463,72 @@ def p_staticValue(p):
     elif p[1] == 'false':
         p[0] = False
         return
-    elif variables.get(p[1]):
+    if variables.get(p[1]):
         p[0] = variables[p[1]][1] # Si el símbolo es encontrado en la tabla de variables, es una variable!
         return
-    elif isinstance(p[1], str) and not (p[1][0] == '"' or p[1][0] == '\''): # si no está en la tabla y no es un string, es una variable sin declarar
+    elif isinstance(p[1], str) and not (p[1][0] == '"' or p[1][0] == '\'' or p[1] == '!' or p[1] == '-' or p[1] == '('): # si no está en la tabla y no es un string u operador, es una variable sin declarar
         semanticLog.debug(f'Error semántico, la variable {p[1]} no ha sido declarada')
-        return 
-
+        return
     if p[1] == '-':
         if p[2] == '(':
-            p[0] = -p[3]
+            if isinstance(p[3], numbers.Number) and type(p[3]) != bool:
+                p[0] = -p[3]
+            elif variables.get(p[3]) and isinstance(variables[p[3]][1], numbers.Number) and type(variables[p[3]][1]) != bool:
+                p[0] = -variables[p[3]][1]
+            else:
+                semanticLog.debug(f'Error semántico, el operador unario {p[1]} no es compatible con {type(p[3])}')
         else:
-            p[0] = -p[2]
+            if isinstance(p[2], numbers.Number) and type(p[2]) != bool:
+                p[0] = -p[2]
+            elif variables.get(p[2]) and isinstance(variables[p[2]][1], numbers.Number) and type(variables[p[2]][1]) != bool:
+                p[0] = -variables[p[2]][1]
+            else:
+                semanticLog.debug(f'Error semántico, el operador unario {p[1]} no es compatible con {type(p[2])}')
+    elif p[1] == '!':
+        if p[2] == '(':
+            if p[3] == 'true':
+                p[0] = not True
+            elif p[3] == 'false':
+                p[0] = not False
+            elif type(p[3]) == bool:
+                p[0] = not p[3]
+            elif variables.get(p[3]) and type(variables[p[3]][1]) == bool:
+                p[0] = not p[3][1]
+            else:
+                semanticLog.debug(f'Error semántico, el operador unario {p[1]} no es compatible con {type(p[3])}')
+        else:
+            if p[2] == 'true':
+                p[0] = not True
+            elif p[2] == 'false':
+                p[0] = not False
+            elif type(p[2]) == bool:
+                p[0] = not p[2]
+            elif variables.get(p[2]) and type(variables[p[2]][1]) == bool:
+                p[0] = not p[2][1]
+            else:
+                semanticLog.debug(f'Error semántico, el operador unario {p[1]} no es compatible con {type(p[2])}')
+    elif p[1] == '(':
+        if p[2] == '-':
+            if isinstance(p[3], numbers.Number) and type(p[3]) != bool:
+                p[0] = -p[3]
+            elif variables.get(p[3]) and isinstance(variables[p[3]][1], numbers.Number) and variables[p[3]][0] != bool:
+                p[0] = -(variables[p[3]][1])
+            else:
+                semanticLog.debug(f'Error semántico, el operador unario {p[2]} no es compatible con {type(p[3])}')
+        elif p[2] == '!':
+            if p[3] == 'true':
+                p[0] = not True
+            elif p[3] == 'false':
+                p[0] = not False
+            elif type(p[3]) == bool:
+                p[0] = not p[3]
+            elif variables.get(p[3]) and variables[p[3]][0] == bool:
+                p[0] = not (variables[p[3]][1])
+            else:
+                semanticLog.debug(f'Error semántico, el operador unario {p[2]} no es compatible con {type(p[3])}')
+        else:
+            p[0] = p[2]
+            
     else:
         p[0] = p[1]
     
