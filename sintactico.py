@@ -748,6 +748,10 @@ def validate_algorithm(algorithm, username):
     semanticLog.setLevel(logging.DEBUG)
 
     result = parser.parse(algorithm, debug=log)
+    handler.close()
+    handler.flush()
+    file_handler.close()
+    file_handler.flush()
     file = open(filename, 'a')
     if os.path.getsize(filename) == 0:
         file.write('No se detectaron errores sintácticos!')

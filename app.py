@@ -53,8 +53,13 @@ validationButton.setStyleSheet(button_style)
 validationButton.setIcon(QIcon('assets/check.png'))
 validationButton.setIconSize(validationButton.sizeHint()) 
 
-def cleanup(layout):
-    os.remove(layout)
+def cleanup(file_path):
+    try:
+        with open(file_path, 'w') as file:
+            pass
+        print(f"Contents of '{file_path}' successfully deleted.")
+    except IOError as e:
+        print(f"Error deleting contents of the file: {e}")
 
 # Acción de validar
 def on_button_click():
@@ -86,20 +91,21 @@ def on_button_click():
                 for line in semanticsLogFile:
                     text_output.append(line.rstrip())
                 text_output.append('')
+                semanticsLogFile.close()
         else:
             text_output.append('Análisis sintáctico fallido!')
             syntaxLogFile = open(syntaxLog, 'r')
             for line in syntaxLogFile:
                 text_output.append(line.rstrip())
             text_output.append('')
-        #cleanup(lexLog)     Entra en conflicto con el gestor de procesos de Windows, funciona en Linux
-        #cleanup(syntaxLog)  
-        #cleanup(semanticsLog)
+            syntaxLogFile.close()
     else:
         text_output.append('Análisis léxico fallido!')
         for token in illegalTokens:
             text_output.append(f'Caracter ilegal: {token}')
-        #cleanup(lexLog)
+    cleanup(lexLog)
+    cleanup(syntaxLog)  
+    cleanup(semanticsLog)
     
 validationButton.clicked.connect(on_button_click)
 

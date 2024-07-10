@@ -402,6 +402,8 @@ def testTokens(algorithm, username):
         if not tok:
             break  # No more input
         lexLog.debug(str(tok))
+    lexHandler.close()
+    lexHandler.flush()
     return (illegal, lexLayout)
 
 
